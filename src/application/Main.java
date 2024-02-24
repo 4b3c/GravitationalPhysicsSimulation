@@ -11,6 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import javafx.scene.shape.Sphere;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -24,20 +26,27 @@ public class Main extends Application {
         try {
             BorderPane root = new BorderPane();
             Scene scene = new Scene(root, 600, 400);
-
+       
             final PhongMaterial blueMaterial = new PhongMaterial();
+            Box box = new Box(100, 200, 300);
+            Sphere sphere = new Sphere(15);
+            
+            
+            
             blueMaterial.setDiffuseColor(Color.BLUE);
             blueMaterial.setSpecularColor(Color.LIGHTBLUE);
-
-            Box box = new Box(100, 200, 300);
+        
             box.setMaterial(blueMaterial);
             box.setTranslateX(300);
             box.setTranslateY(200);
-            box.setRotationAxis(new Point3D(10, 60, 40));
+            box.setRotationAxis(Rotate.Y_AXIS);
             box.setRotate(0);
 
             root.getChildren().add(box);
+            root.getChildren().add(sphere);
 
+            
+            
             // Set up the game loop
             Timeline gameLoop = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
                 // Handle user input
@@ -48,7 +57,9 @@ public class Main extends Application {
             }));
             gameLoop.setCycleCount(Animation.INDEFINITE);
             gameLoop.play();
+            
 
+            
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (Exception e) {
@@ -61,15 +72,19 @@ public class Main extends Application {
             KeyCode keyCode = event.getCode();
             switch (keyCode) {
                 case UP:
+                	box.setRotationAxis(Rotate.Y_AXIS);
                     box.setTranslateY(box.getTranslateY() - MOVEMENT_SPEED);
                     break;
                 case DOWN:
+                	box.setRotationAxis(Rotate.Y_AXIS);
                     box.setTranslateY(box.getTranslateY() + MOVEMENT_SPEED);
                     break;
                 case LEFT:
+                	box.setRotationAxis(Rotate.X_AXIS);
                     box.setRotate(box.getRotate() - ROTATION_SPEED);
                     break;
                 case RIGHT:
+                	box.setRotationAxis(Rotate.X_AXIS);
                     box.setRotate(box.getRotate() + ROTATION_SPEED);
                     break;
                 default:
@@ -77,6 +92,7 @@ public class Main extends Application {
             }
         });
     }
+
 
     private void updateGameLogic(Box box) {
         // Add any game logic updates here
