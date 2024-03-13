@@ -18,8 +18,7 @@ import javafx.util.Duration;
 
 public class Main extends Application {
 
-    private static final double ROTATION_SPEED = 1.0; // Adjust as needed
-    private static final double MOVEMENT_SPEED = 5.0; // Adjust as needed
+    private static final double ROTATION_SPEED = 3.0;
 
     @Override
     public void start(Stage primaryStage) {
@@ -29,9 +28,10 @@ public class Main extends Application {
        
             final PhongMaterial blueMaterial = new PhongMaterial();
             Box box = new Box(100, 200, 300);
-            Sphere sphere = new Sphere(15);
             
-            
+            // Create separate Rotate transforms for x and y axes
+            Rotate xRotate = new Rotate(0, Rotate.X_AXIS);
+            Rotate yRotate = new Rotate(0, Rotate.Y_AXIS);
             
             blueMaterial.setDiffuseColor(Color.BLUE);
             blueMaterial.setSpecularColor(Color.LIGHTBLUE);
@@ -39,18 +39,16 @@ public class Main extends Application {
             box.setMaterial(blueMaterial);
             box.setTranslateX(300);
             box.setTranslateY(200);
-            box.setRotationAxis(Rotate.Y_AXIS);
-            box.setRotate(0);
-
-            root.getChildren().add(box);
-            root.getChildren().add(sphere);
+            
+            box.getTransforms().addAll(xRotate, yRotate);
+            root.getChildren().addAll(box);
 
             
             
             // Set up the game loop
             Timeline gameLoop = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
                 // Handle user input
-                handleInput(scene, box);
+                handleInput(scene, xRotate, yRotate);
 
                 // Update game logic
                 updateGameLogic(box);
@@ -67,25 +65,21 @@ public class Main extends Application {
         }
     }
 
-    private void handleInput(Scene scene, Box box) {
+    private void handleInput(Scene scene, Rotate xRotate, Rotate yRotate) {
         scene.setOnKeyPressed(event -> {
             KeyCode keyCode = event.getCode();
             switch (keyCode) {
                 case UP:
-                	box.setRotationAxis(Rotate.Y_AXIS);
-                    box.setTranslateY(box.getTranslateY() - MOVEMENT_SPEED);
+                	xRotate.setAngle(xRotate.getAngle() + ROTATION_SPEED);
                     break;
                 case DOWN:
-                	box.setRotationAxis(Rotate.Y_AXIS);
-                    box.setTranslateY(box.getTranslateY() + MOVEMENT_SPEED);
+                	xRotate.setAngle(xRotate.getAngle() - ROTATION_SPEED);
                     break;
                 case LEFT:
-                	box.setRotationAxis(Rotate.X_AXIS);
-                    box.setRotate(box.getRotate() - ROTATION_SPEED);
+                	yRotate.setAngle(yRotate.getAngle() + ROTATION_SPEED);
                     break;
                 case RIGHT:
-                	box.setRotationAxis(Rotate.X_AXIS);
-                    box.setRotate(box.getRotate() + ROTATION_SPEED);
+                	yRotate.setAngle(yRotate.getAngle() - ROTATION_SPEED);
                     break;
                 default:
                     break;
