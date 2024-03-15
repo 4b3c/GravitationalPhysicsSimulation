@@ -1,7 +1,5 @@
 package application;
 
-import java.awt.event.MouseEvent;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -9,7 +7,6 @@ import javafx.application.Application;
 import javafx.geometry.Point3D;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -69,26 +66,24 @@ public class Main extends Application {
     }
 
     private void handleInput(Scene scene, Rotate xRotate, Rotate yRotate) {
-    	final boolean pressed;
-        scene.setOnMousePressed(event -> {
-        	MouseButton mouseButton = event.getButton();
-            switch (mouseButton) {
-                case PRIMARY:
-                	pressed = true;
+        scene.setOnKeyPressed(event -> {
+            KeyCode keyCode = event.getCode();
+            switch (keyCode) {
+                case UP:
+                	xRotate.setAngle(xRotate.getAngle() + ROTATION_SPEED);
+                    break;
+                case DOWN:
+                	xRotate.setAngle(xRotate.getAngle() - ROTATION_SPEED);
+                    break;
+                case LEFT:
+                	yRotate.setAngle(yRotate.getAngle() + ROTATION_SPEED);
+                    break;
+                case RIGHT:
+                	yRotate.setAngle(yRotate.getAngle() - ROTATION_SPEED);
+                    break;
                 default:
                     break;
             }
-        });
-        
-        
-        scene.setOnMouseReleased(event -> {
-        	MouseButton mouseButton = event.getButton();
-        	switch (mouseButton) {
-        		case PRIMARY:
-        			int x = 10;
-        		default:
-        			break;
-        	}
         });
     }
 
