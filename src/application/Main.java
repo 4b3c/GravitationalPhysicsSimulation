@@ -22,62 +22,56 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        try {
-        	Text mousePosText = new Text(10, 20, null);
-        	Text lastMousePosText = new Text(10, 40, null);
-            BorderPane root = new BorderPane();
-            Scene scene = new Scene(root, 600, 400);
+        Text mousePosText = new Text(10, 20, null);
+        Text lastMousePosText = new Text(10, 40, null);
+        BorderPane root = new BorderPane();
+        Scene scene = new Scene(root, 600, 400);
        
-            final PhongMaterial blueMaterial = new PhongMaterial();
-            Box box = new Box(100, 200, 300);
+        final PhongMaterial blueMaterial = new PhongMaterial();
+        Box box = new Box(100, 200, 300);
             
-            // Create separate Rotate transforms for x and y axes
-            Rotate xRotate = new Rotate(0, Rotate.X_AXIS);
-            Rotate yRotate = new Rotate(0, Rotate.Y_AXIS);
+        // Create separate Rotate transforms for x and y axes
+        Rotate xRotate = new Rotate(0, Rotate.X_AXIS);
+        Rotate yRotate = new Rotate(0, Rotate.Y_AXIS);
             
-            blueMaterial.setDiffuseColor(Color.BLUE);
-            blueMaterial.setSpecularColor(Color.LIGHTBLUE);
+        blueMaterial.setDiffuseColor(Color.BLUE);
+        blueMaterial.setSpecularColor(Color.LIGHTBLUE);
         
-            box.setMaterial(blueMaterial);
-            box.setTranslateX(300);
-            box.setTranslateY(200);
+        box.setMaterial(blueMaterial);
+        box.setTranslateX(300);
+        box.setTranslateY(200);
             
-            box.getTransforms().addAll(xRotate, yRotate);
-            root.getChildren().addAll(box, mousePosText, lastMousePosText);
-
-            
-            // Set up the game loop
-            Timeline gameLoop = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
-                // Handle user input
-            	handleRotation(scene, xRotate, yRotate);
-
-                // Update game logic
-                updateGameLogic(box);
-            }));
-            gameLoop.setCycleCount(Animation.INDEFINITE);
-            gameLoop.play();
-            
+        box.getTransforms().addAll(xRotate, yRotate);
+        root.getChildren().addAll(box, mousePosText, lastMousePosText);
 
             
-            // Event handler to update mouse position
-            scene.setOnMouseMoved(event -> updateMousePosition(mousePosText, lastMousePosText, event));
-            scene.setOnMouseDragged(event -> updateMousePosition(mousePosText, lastMousePosText, event));
+        // Set up the game loop
+        Timeline gameLoop = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> { handleRotation(scene, xRotate, yRotate); }));
+        gameLoop.setCycleCount(Animation.INDEFINITE);
+        gameLoop.play();
+            
 
-            // Event handler to check mouse button status
-            scene.setOnMousePressed(event -> { mouseClicked = true; });
-            scene.setOnMouseReleased(event -> { mouseClicked = false; });
+        setInputEvents(scene, mousePosText, lastMousePosText);
+            
 
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Gravitational Physics Simulation");
-            primaryStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Gravitational Physics Simulation");
+        primaryStage.show();
+
+    }
+    
+    private void setInputEvents(Scene scene, Text text1, Text text2) {
+		// Event handler to update mouse position
+        scene.setOnMouseMoved(event -> updateMousePosition(text1, text2, event));
+        scene.setOnMouseDragged(event -> updateMousePosition(text1, text2, event));
+
+        // Event handler to check mouse button status
+        scene.setOnMousePressed(event -> { mouseClicked = true; });
+        scene.setOnMouseReleased(event -> { mouseClicked = false; });
     }
     
     private void updateMousePosition(Text text1, Text text2, javafx.scene.input.MouseEvent event) {
-    	lastMousePos[0] = mousePos[0];
-    	lastMousePos[1] = mousePos[1];
+    	updateLastMousePos();
     	mousePos[0] = event.getX();
         mousePos[1] = event.getY();
         text1.setText(String.format("Mouse Position: (%.1f, %.1f)", mousePos[0], mousePos[1]));
@@ -88,14 +82,13 @@ public class Main extends Application {
     	if (mouseClicked) {
     		xRotate.setAngle(xRotate.getAngle() + (mousePos[1] - lastMousePos[1]) / 2);
     		yRotate.setAngle(yRotate.getAngle() - (mousePos[0] - lastMousePos[0]) / 2);
-    		lastMousePos[0] = mousePos[0];
-        	lastMousePos[1] = mousePos[1];
+    		updateLastMousePos();
     	}
     }
-
-
-    private void updateGameLogic(Box box) {
-        // Add any game logic updates here
+    
+    private void updateLastMousePos() {
+    	lastMousePos[0] = mousePos[0];
+    	lastMousePos[1] = mousePos[1];
     }
 
     public static void main(String[] args) {
