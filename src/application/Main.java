@@ -22,26 +22,26 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+    	
+    	// Define text areas for debugging mouse input, and basic things for the window
         Text mousePosText = new Text(10, 20, null);
         Text lastMousePosText = new Text(10, 40, null);
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 600, 400);
-       
+        
+        // Define our box and its material and rotation
         final PhongMaterial blueMaterial = new PhongMaterial();
-        Box box = new Box(100, 200, 300);
-            
-        // Create separate Rotate transforms for x and y axes
-        Rotate xRotate = new Rotate(0, Rotate.X_AXIS);
-        Rotate yRotate = new Rotate(0, Rotate.Y_AXIS);
-            
         blueMaterial.setDiffuseColor(Color.BLUE);
         blueMaterial.setSpecularColor(Color.LIGHTBLUE);
-        
+        Rotate xRotate = new Rotate(0, Rotate.X_AXIS);
+        Rotate yRotate = new Rotate(0, Rotate.Y_AXIS);
+        Box box = new Box(100, 200, 300);
         box.setMaterial(blueMaterial);
         box.setTranslateX(300);
         box.setTranslateY(200);
-            
         box.getTransforms().addAll(xRotate, yRotate);
+        
+        
         root.getChildren().addAll(box, mousePosText, lastMousePosText);
 
             
@@ -61,11 +61,8 @@ public class Main extends Application {
     }
     
     private void setInputEvents(Scene scene, Text text1, Text text2) {
-		// Event handler to update mouse position
         scene.setOnMouseMoved(event -> updateMousePosition(text1, text2, event));
         scene.setOnMouseDragged(event -> updateMousePosition(text1, text2, event));
-
-        // Event handler to check mouse button status
         scene.setOnMousePressed(event -> { mouseClicked = true; });
         scene.setOnMouseReleased(event -> { mouseClicked = false; });
     }
