@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,12 +17,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import javafx.scene.ParallelCamera;
+
 
 public class Main extends Application {
 	
@@ -48,7 +52,12 @@ public class Main extends Application {
         
         BorderPane root = new BorderPane();
         root.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
-        Scene scene = new Scene(root, WINDOW_SIZE[0], WINDOW_SIZE[1]);
+        
+        
+        ParallelCamera camera = new ParallelCamera();
+        camera.setTranslateZ(-250);
+        Scene scene = new Scene(root, WINDOW_SIZE[0], WINDOW_SIZE[1], true);
+        scene.setCamera(camera);
         
         
         
@@ -91,21 +100,20 @@ public class Main extends Application {
         
         Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
         
-        Group group = new Group(body, axes);
+        Vector3D vector = new Vector3D(new Point3D(0, 0, 0), new Point3D(40, 70, 100));
+     
+        
+
+        
+        
+        Group group = new Group(body, axes, vector);
         group.setTranslateX(SIMULATION_CENTER[0]);
         group.setTranslateY(SIMULATION_CENTER[1]);
+        group.setTranslateZ(-500);
         group.getTransforms().addAll(xRotate, yRotate, zRotate);
         
         
         root.getChildren().addAll(mousePosText, group);
-        
-        
-        
-        
-        
-        
-        
-        
         
 
             
