@@ -4,7 +4,6 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,8 +16,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Box;
-import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
@@ -84,14 +81,7 @@ public class Main extends Application {
         
         
         
-        
-        
-        // Define our box and its center and rotation
-        Box box = new Box(50, 100, 200);
-        setMaterial(box);
-        box.setTranslateX(300);
-        box.setTranslateY(20);
-        box.setTranslateZ(50);
+
         
         Sphere body = new Sphere(70);
         setMaterial(body);
@@ -99,22 +89,9 @@ public class Main extends Application {
         body.setTranslateY(0);
         body.setTranslateZ(Math.cos(t) * 300);
         
-        // Define some cylinders to act as axis for the 3D space
-        Cylinder cylinderX = new Cylinder(2, 750);
-        Cylinder cylinderY = new Cylinder(2, 750);
-        Cylinder cylinderZ = new Cylinder(2, 750);
-
-        cylinderX.setRotationAxis(new Point3D(1, 0, 0));
-        cylinderX.setRotate(90);
-        setMaterial(cylinderX);
-        cylinderY.setRotationAxis(new Point3D(0, 1, 0));
-        cylinderY.setRotate(90);
-        setMaterial(cylinderY);
-        cylinderZ.setRotationAxis(new Point3D(0, 0, 1));
-        cylinderZ.setRotate(90);
-        setMaterial(cylinderZ);
+        Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
         
-        Group group = new Group(body, cylinderX, cylinderY, cylinderZ);
+        Group group = new Group(body, axes);
         group.setTranslateX(SIMULATION_CENTER[0]);
         group.setTranslateY(SIMULATION_CENTER[1]);
         group.getTransforms().addAll(xRotate, yRotate, zRotate);
@@ -186,11 +163,7 @@ public class Main extends Application {
         blueMaterial.setSpecularColor(Color.LIGHTBLUE);
         shape.setMaterial(blueMaterial);
     }
-    
-    public static void setCenter(Shape3D shape) {
-        shape.setTranslateX(600);
-        shape.setTranslateY(400);
-    }
+
 
     public static void main(String[] args) {
         launch(args);
