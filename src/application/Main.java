@@ -13,6 +13,7 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.Shape3D;
+import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
@@ -23,6 +24,7 @@ public class Main extends Application {
     private boolean mouseClicked = false;
     private double[] mousePos = {0.0, 0.0};
     private double[] lastMousePos = {0.0, 0.0};
+    private double t = 0;
     
     public static Rotate xRotate = new Rotate(0, Rotate.X_AXIS);
     public static Rotate yRotate = new Rotate(0, Rotate.Y_AXIS);
@@ -35,7 +37,6 @@ public class Main extends Application {
         Text mousePosText = new Text(10, 20, null);
         Text lastMousePosText = new Text(10, 40, null);
         
-        
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 1200, 800);
         
@@ -46,6 +47,12 @@ public class Main extends Application {
         box.setTranslateY(20);
         box.setTranslateZ(50);
         
+        Sphere body = new Sphere(70);
+        setMaterial(body);
+        body.setTranslateX(Math.sin(t) * 300);
+        body.setTranslateY(0);
+        body.setTranslateZ(Math.cos(t) * 300);
+        
         // Define some cylinders to act as axis for the 3D space
         Cylinder cylinderX = new Cylinder(2, 750);
         Cylinder cylinderY = new Cylinder(2, 750);
@@ -53,12 +60,15 @@ public class Main extends Application {
 
         cylinderX.setRotationAxis(new Point3D(1, 0, 0));
         cylinderX.setRotate(90);
+        setMaterial(cylinderX);
         cylinderY.setRotationAxis(new Point3D(0, 1, 0));
         cylinderY.setRotate(90);
+        setMaterial(cylinderY);
         cylinderZ.setRotationAxis(new Point3D(0, 0, 1));
         cylinderZ.setRotate(90);
+        setMaterial(cylinderZ);
         
-        Group group = new Group(box, cylinderX, cylinderY, cylinderZ);
+        Group group = new Group(body, cylinderX, cylinderY, cylinderZ);
         group.setTranslateX(600);
         group.setTranslateY(400);
         group.getTransforms().addAll(xRotate, yRotate, zRotate);
@@ -68,7 +78,13 @@ public class Main extends Application {
 
             
         // Set up the game loop
-        Timeline gameLoop = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> { handleRotation(scene); }));
+        Timeline gameLoop = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
+        	handleRotation(scene);
+        	t = t + 0.01;
+        	body.setTranslateX(Math.sin(t) * 300);
+            body.setTranslateZ(Math.cos(t) * 300);
+        }));
+        
         gameLoop.setCycleCount(Animation.INDEFINITE);
         gameLoop.play();
             
