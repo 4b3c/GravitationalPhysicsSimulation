@@ -100,8 +100,10 @@ public class Main extends Application {
         
         Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
         
-        Vector3D vector = new Vector3D(new Point3D(0, 0, 0), new Point3D(40, 70, 100));
-     
+        Vector3D vector = new Vector3D(new Point3D(0, 0, 0), new Point3D(100, 100, 100));
+        vector.setTranslateX(25);
+        vector.setTranslateY(25);
+        vector.setTranslateZ(25);
         
 
         

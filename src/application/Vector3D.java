@@ -16,6 +16,7 @@ public class Vector3D extends Group {
 	public Vector3D(Point3D  start, Point3D end) {
 		len = start.distance(end);
 		angle = start.angle(end);
+		Point3D diff = start.subtract(end);
 		
 		cone = new Cone(6, 0, 12);
 		cylinder = new Cylinder(3, len - 12);
@@ -26,9 +27,9 @@ public class Vector3D extends Group {
 //		this.setTranslateX(start.getX() - end.getX());
 //		this.setTranslateY(start.getY() - end.getY());
 //		this.setTranslateZ(start.getZ() - end.getZ());
-		this.setRotationAxis(start.subtract(end).normalize());
-		this.setRotate(90);
-		System.out.println(start.subtract(end).normalize() + "" + angle);
+		this.setRotationAxis(diff.normalize());
+		this.setRotate(Math.atan(diff.getY() / diff.getX()) * 180 / Math.PI);
+		System.out.println(diff.normalize() + "" + Math.atan(diff.getY() / diff.getX()) * 180 / Math.PI);
 	}
 
 
