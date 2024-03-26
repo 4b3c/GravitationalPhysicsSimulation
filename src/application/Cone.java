@@ -14,7 +14,7 @@ public class Cone extends Group {
 	
 	public Cone(int r1, int r2, int h) {
 	    Group cone = new Group();
-	    PhongMaterial material = new PhongMaterial(Color.BLUE);
+	    PhongMaterial material = new PhongMaterial(Color.GREEN);
 	
 	    float[] points = new float[rounds *12];
 	    float[] textCoords = {

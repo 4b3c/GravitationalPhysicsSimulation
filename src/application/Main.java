@@ -100,15 +100,15 @@ public class Main extends Application {
         
         Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
         
-        Vector3D vector = new Vector3D(new Point3D(0, 0, 0), new Point3D(100, 100, 100));
-        vector.setTranslateX(25);
-        vector.setTranslateY(25);
-        vector.setTranslateZ(25);
+        Vector3D v = new Vector3D(new Point3D(0, 0, 0), new Point3D(100, -100, 100));
+        Vector3D v2 = new Vector3D(new Point3D(0, 0, 100), new Point3D(100, -100, 100));
+        Vector3D v3 = new Vector3D(new Point3D(0, -100, -100), new Point3D(100, -100, 100));
+        
         
 
         
         
-        Group group = new Group(body, axes, vector);
+        Group group = new Group(body, axes, v, v2, v3);
         group.setTranslateX(SIMULATION_CENTER[0]);
         group.setTranslateY(SIMULATION_CENTER[1]);
         group.setTranslateZ(-500);

@@ -5,31 +5,45 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Cylinder;
+import javafx.scene.shape.Sphere;
 
 public class Vector3D extends Group {
 	
 	private Cylinder cylinder;
 	private Cone cone;
+	private Sphere sphere;
 	private double len;
-	private double angle;
+	private Point3D diff;
 	
 	public Vector3D(Point3D  start, Point3D end) {
-		len = start.distance(end);
-		angle = start.angle(end);
-		Point3D diff = start.subtract(end);
+		len = end.distance(start);
+		diff = end.subtract(start);
+		diff = new Point3D(diff.getX(), -diff.getY(), diff.getZ());
+		Point3D diffn = diff.normalize();
+
+		
+		sphere = new Sphere(0);
+		sphere.setTranslateY(len + 3);
 		
 		cone = new Cone(6, 0, 12);
+		cone.setTranslateY(-len + 3);
+		
 		cylinder = new Cylinder(3, len - 12);
-		cylinder.setTranslateY(len / 2);
-		cylinder.setMaterial(new PhongMaterial(Color.BLUE));
+		cylinder.setTranslateY((-len / 2) + 3);
+		cylinder.setMaterial(new PhongMaterial(Color.GREEN));
 
-		this.getChildren().addAll(cylinder, cone);
-//		this.setTranslateX(start.getX() - end.getX());
-//		this.setTranslateY(start.getY() - end.getY());
-//		this.setTranslateZ(start.getZ() - end.getZ());
-		this.setRotationAxis(diff.normalize());
-		this.setRotate(Math.atan(diff.getY() / diff.getX()) * 180 / Math.PI);
-		System.out.println(diff.normalize() + "" + Math.atan(diff.getY() / diff.getX()) * 180 / Math.PI);
+		this.getChildren().addAll(cylinder, cone, sphere);
+		this.setRotationAxis(diffn.crossProduct(new Point3D(0, 1, 0)));
+		this.setRotate(Math.acos(diffn.getY()) * 180 / Math.PI);
+		
+		this.setTranslateX(start.getX());
+		this.setTranslateY(start.getY());
+		this.setTranslateZ(start.getZ());
+	
+	}
+	
+	public void updateAngle(double newAngle) {
+		this.setRotate(newAngle);
 	}
 
 
