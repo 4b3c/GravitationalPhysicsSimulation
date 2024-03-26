@@ -17,7 +17,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
@@ -100,9 +99,9 @@ public class Main extends Application {
         
         Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
         
-        Vector3D v = new Vector3D(new Point3D(0, 0, 0), new Point3D(100, -100, 100), Color.GREEN);
-        Vector3D v2 = new Vector3D(new Point3D(0, 0, 100), new Point3D(100, -100, 100), Color.RED);
-        Vector3D v3 = new Vector3D(new Point3D(0, -100, -100), new Point3D(100, -100, 100), Color.YELLOW);
+        Vector3D v = new Vector3D(new Point3D(100, -100, 100), Color.GREEN);
+        Vector3D v2 = new Vector3D(new Point3D(100, -100, 100), Color.RED);
+        Vector3D v3 = new Vector3D(new Point3D(100, -100, 100), Color.YELLOW);
         
         
         

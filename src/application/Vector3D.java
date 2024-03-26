@@ -16,7 +16,8 @@ public class Vector3D extends Group {
 	private Point3D diff;
 	private Point3D diffn;
 	
-	public Vector3D(Point3D  start, Point3D end, Color color) {
+	public Vector3D(Point3D end, Color color) {
+		Point3D start = new Point3D(0, 0, 0);
 		len = end.distance(start);
 		diff = end.subtract(start);
 		diff = new Point3D(diff.getX(), -diff.getY(), diff.getZ());
