@@ -12,9 +12,9 @@ public class Cone extends Group {
 
 	int rounds = 360;
 	
-	public Cone(int r1, int r2, int h) {
+	public Cone(int r1, int r2, int h, Color color) {
 	    Group cone = new Group();
-	    PhongMaterial material = new PhongMaterial(Color.GREEN);
+	    PhongMaterial material = new PhongMaterial(color);
 	
 	    float[] points = new float[rounds *12];
 	    float[] textCoords = {

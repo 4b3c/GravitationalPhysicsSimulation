@@ -14,23 +14,24 @@ public class Vector3D extends Group {
 	private Sphere sphere;
 	private double len;
 	private Point3D diff;
+	private Point3D diffn;
 	
-	public Vector3D(Point3D  start, Point3D end) {
+	public Vector3D(Point3D  start, Point3D end, Color color) {
 		len = end.distance(start);
 		diff = end.subtract(start);
 		diff = new Point3D(diff.getX(), -diff.getY(), diff.getZ());
-		Point3D diffn = diff.normalize();
+		diffn = diff.normalize();
 
 		
 		sphere = new Sphere(0);
 		sphere.setTranslateY(len + 3);
 		
-		cone = new Cone(6, 0, 12);
+		cone = new Cone(6, 0, 12, color);
 		cone.setTranslateY(-len + 3);
 		
 		cylinder = new Cylinder(3, len - 12);
 		cylinder.setTranslateY((-len / 2) + 3);
-		cylinder.setMaterial(new PhongMaterial(Color.GREEN));
+		cylinder.setMaterial(new PhongMaterial(color));
 
 		this.getChildren().addAll(cylinder, cone, sphere);
 		this.setRotationAxis(diffn.crossProduct(new Point3D(0, 1, 0)));

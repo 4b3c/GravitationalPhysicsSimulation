@@ -5,36 +5,52 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Cylinder;
+import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 
 
 public class Axis3D extends Group{
+   
+	private PhongMaterial material = new PhongMaterial();;
+    private Cylinder[] axes = new Cylinder[3];
+    private Text[] textLabels = new Text[3];
     
-    private Cylinder cylinderX;
-    private Cylinder cylinderY;
-    private Cylinder cylinderZ;
+    private double radius;
+    private double height;
     
     public Axis3D(double radius, double height, Color color) {
-    	PhongMaterial material = new PhongMaterial();
         material.setDiffuseColor(color);
+        this.radius = radius;
+        this.height = height;
         
-        cylinderX = new Cylinder(radius, height);
-        cylinderY = new Cylinder(radius, height);
-        cylinderZ = new Cylinder(radius, height);
-
-        cylinderX.setRotationAxis(new Point3D(1, 0, 0));
-        cylinderY.setRotationAxis(new Point3D(0, 1, 0));
-        cylinderZ.setRotationAxis(new Point3D(0, 0, 1));
+        createAxis(0, "X");
+        createAxis(1, "Y");
+        createAxis(2, "Z");
         
-        cylinderX.setRotate(90);
-        cylinderY.setRotate(90);
-        cylinderZ.setRotate(90);
-        
-        cylinderX.setMaterial(material);
-        cylinderY.setMaterial(material);
-        cylinderZ.setMaterial(material);
-        
-        
-        
-        this.getChildren().addAll(cylinderX, cylinderY, cylinderZ);
     }
+    
+    public void createAxis(int ind, String label) {
+    	int[] rax = {0, 0, 0};
+    	rax[ind] = 1;
+    	
+    	axes[ind] = new Cylinder(radius, height);
+    	axes[ind].setRotationAxis(new Point3D(rax[0], rax[1], rax[2]));
+    	axes[ind].setRotate(90);
+    	axes[ind].setMaterial(material);
+    	
+    	textLabels[ind] = new Text(0, 0, label);
+    	textLabels[ind].setScaleX(3);
+    	textLabels[ind].setScaleY(3);
+    	textLabels[ind].setTranslateX((((height / 2) + 20 ) * rax[0]) - 3);
+    	textLabels[ind].setTranslateY((((height / 2) + 20 ) * rax[1]) + 3);
+    	textLabels[ind].setTranslateZ(((height / 2) + 20 ) * rax[2]);
+    	
+    	if (ind == 2) {
+    		textLabels[ind].setRotationAxis(Rotate.Y_AXIS);
+    		textLabels[ind].setRotate(-90);
+    	}
+    	
+    	this.getChildren().addAll(axes[ind], textLabels[ind]);
+    }
+    
 }
