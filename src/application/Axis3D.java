@@ -42,7 +42,7 @@ public class Axis3D extends Group{
     	textLabels[ind].setScaleX(3);
     	textLabels[ind].setScaleY(3);
     	textLabels[ind].setTranslateX((((height / 2) + 20 ) * rax[0]) - 3);
-    	textLabels[ind].setTranslateY((((height / 2) + 20 ) * rax[1]) + 3);
+    	textLabels[ind].setTranslateY(-(((height / 2) + 20 ) * rax[1]) + 3);
     	textLabels[ind].setTranslateZ(((height / 2) + 20 ) * rax[2]);
     	
     	if (ind == 2) {

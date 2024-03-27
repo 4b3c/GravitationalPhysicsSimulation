@@ -91,17 +91,14 @@ public class Main extends Application {
         
 
         
-        Sphere body = new Sphere(70);
-        setMaterial(body);
-        body.setTranslateX(Math.sin(t) * 300);
-        body.setTranslateY(0);
-        body.setTranslateZ(Math.cos(t) * 300);
+        Body body = new Body(40, 40, new Point3D(0, 0, 0), new Vector3D(new Point3D(100, 0, 0), Color.BLUE));
+        body.setRotationAxis(Rotate.Y_AXIS);
         
         Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
         
         Vector3D v = new Vector3D(new Point3D(100, -100, 100), Color.GREEN);
-        Vector3D v2 = new Vector3D(new Point3D(100, -100, 100), Color.RED);
-        Vector3D v3 = new Vector3D(new Point3D(100, -100, 100), Color.YELLOW);
+        Vector3D v2 = new Vector3D(new Point3D(200, 0, 100), Color.RED);
+        Vector3D v3 = new Vector3D(new Point3D(100, -300, 0), Color.YELLOW);
         
         
         
@@ -122,6 +119,7 @@ public class Main extends Application {
         	t = t + 0.01;
         	body.setTranslateX(Math.sin(t) * 300);
             body.setTranslateZ(Math.cos(t) * 300);
+            body.setRotate(t * 180 / Math.PI);
         }));
         
         gameLoop.setCycleCount(Animation.INDEFINITE);
