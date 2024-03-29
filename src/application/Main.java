@@ -57,12 +57,11 @@ public class Main extends Application {
         
         VBox planetList = new VBox();
         planetList.setBackground(new Background(new BackgroundFill(Color.rgb(100, 100, 100), null, null)));
+        planetList.getChildren().add(new TriangleButton("Sun"));
         planetList.getChildren().add(new TriangleButton("Earth"));
         planetList.getChildren().add(new TriangleButton("Moon"));
         planetList.setDepthTest(DepthTest.DISABLE);
         root.setRight(planetList);
-        
-        
         
         
 
