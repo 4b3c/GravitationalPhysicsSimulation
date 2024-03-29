@@ -1,18 +1,22 @@
 package application;
 
-import java.util.function.UnaryOperator;
-
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.shape.Sphere;
+
+
+@FunctionalInterface
+interface whatToDoWithIt {
+  void perform(double newValue);
+}
+
 
 public class Body extends Group{
 	
 	private String name;
-	private double[] radius = new double[1];
 	private double mass;
+	private LinkedDouble radius;
 	private Point3D pos;
 	private Vector3D vel;
 	private Vector3D acc;
@@ -20,13 +24,17 @@ public class Body extends Group{
 	private Sphere sphere;
 	public BodyUI ui;
 	
+	
 	public Body(String name, double radius, double mass, Point3D pos, Vector3D velocity) {
 		this.name = name;
-		this.radius[0] = radius;
+		
+		whatToDoWithIt radiusUpdate = (newValue) -> sphere.setRadius(newValue);
+		this.radius = new LinkedDouble(radius, radiusUpdate);
+		
 		this.mass = mass;
 		this.pos = pos;
 		
-		sphere = new Sphere(this.radius[0]);
+		sphere = new Sphere(this.radius.get());
 		vel = velocity;
 		
 		this.getChildren().addAll(sphere, vel);
@@ -44,26 +52,19 @@ public class Body extends Group{
         TextField[] posField = ui.add3DEntryField("Position :", "X :", "Y :", "Z :");
         TextField[] velField = ui.add3DEntryField("Velocity :", "X :", "Y :", "Z :");
         
+        this.radius.addListener(radiusField);
         
-    	radiusField.setTextFormatter(new TextFormatter<String>(new UnaryOperator<TextFormatter.Change>() {
-
-			@Override
-            public TextFormatter.Change apply(TextFormatter.Change change) {
-            	try {
-            		double newValue = Double.parseDouble(radiusField.getText() + change.getText());
-            		setRadius(newValue);
-            		return change;
-            	} catch (NumberFormatException e) {
-            		return null;
-            	}
-            }
-        }));
 		
 	}
 	
 	public void setRadius(double newValue) {
+		this.radius.set(newValue);
 		sphere.setRadius(newValue);
 		
+	}
+	
+	public double getRadius() {
+		return this.radius.get();
 	}
 
 }
