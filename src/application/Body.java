@@ -6,6 +6,7 @@ import javafx.scene.shape.Sphere;
 
 public class Body extends Group{
 	
+	private String name;
 	private double radius;
 	private double mass;
 	private Point3D pos;
@@ -13,8 +14,10 @@ public class Body extends Group{
 	private Vector3D acc;
 	private Vector3D force;
 	private Sphere sphere;
+	private BodyUI ui;
 	
-	public Body(double radius, double mass, Point3D pos, Vector3D velocity) {
+	public Body(String name, double radius, double mass, Point3D pos, Vector3D velocity) {
+		this.name = name;
 		this.radius = radius;
 		this.mass = mass;
 		this.pos = pos;
@@ -24,6 +27,14 @@ public class Body extends Group{
 		
 		this.getChildren().addAll(sphere, vel);
 		
+	}
+	
+	public void create3DSelf() {
+		
+	}
+	
+	public void createUISelf() {
+		ui = new BodyUI(this.name);
 	}
 
 }

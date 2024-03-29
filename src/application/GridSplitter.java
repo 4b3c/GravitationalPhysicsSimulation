@@ -1,5 +1,7 @@
 package application;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -41,7 +43,7 @@ public class GridSplitter extends GridPane {
 		getChildren().add(label);
 	}
 	
-	public void addTextBox(int column) {
+	public TextField addTextBox(int column) {
 		DropShadow shadow = new DropShadow();
         shadow.setSpread(0.2);
         shadow.setColor(Color.rgb(80, 80, 80));
@@ -54,6 +56,8 @@ public class GridSplitter extends GridPane {
         
         setConstraints(entry, column, 0);
 		getChildren().add(entry);
+		
+		return entry;
 	}
 
 }

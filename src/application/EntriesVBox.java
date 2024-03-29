@@ -2,6 +2,7 @@ package application;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
@@ -20,28 +21,32 @@ public class EntriesVBox extends VBox {
 		setBackground(new Background(new BackgroundFill(Color.rgb(100, 100, 100), null, null)));
 	}
 	
-	public void addEntryField(String text) {
+	public TextField addEntryField(String text) {
         double[] widths = {this.width / 4, this.width * 3 / 4};
         GridSplitter labelAndEntry = new GridSplitter(widths, 2);
         labelAndEntry.addText(text, 0);
-        labelAndEntry.addTextBox(1);
+        TextField field = labelAndEntry.addTextBox(1);
                 
         getChildren().add(labelAndEntry);
+        
+        return field;
 	}
 	
-	public void add3DEntryField(String text, String text1, String text2, String text3) {
+	public TextField[] add3DEntryField(String text, String text1, String text2, String text3) {
+		TextField[] fields = new TextField[3];
+		
         double[] widths = {this.width / 16, this.width * 3 / 16};
         GridSplitter labelAndEntry1 = new GridSplitter(widths, 2);
         labelAndEntry1.addText(text1, 0);
-        labelAndEntry1.addTextBox(1);
+        fields[0] = labelAndEntry1.addTextBox(1);
         
         GridSplitter labelAndEntry2 = new GridSplitter(widths, 2);
         labelAndEntry2.addText(text2, 0);
-        labelAndEntry2.addTextBox(1);
+        fields[1] = labelAndEntry2.addTextBox(1);
         
         GridSplitter labelAndEntry3 = new GridSplitter(widths, 2);
         labelAndEntry3.addText(text3, 0);
-        labelAndEntry3.addTextBox(1);
+        fields[2] = labelAndEntry3.addTextBox(1);
         
         
         double[] widths1 = {this.width / 4, this.width / 4, this.width / 4};
@@ -60,6 +65,8 @@ public class EntriesVBox extends VBox {
         labelAndEntry.addNodes(nodes2);
         
         getChildren().add(labelAndEntry);
+        
+        return fields;
 	}
 
 }
