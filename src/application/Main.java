@@ -5,12 +5,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Point3D;
+import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -18,7 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Shape3D;
-import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
@@ -50,7 +46,7 @@ public class Main extends Application {
         Text mousePosText = new Text(10, 20, null);
         
         BorderPane root = new BorderPane();
-        root.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
+        root.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, null, null)));
         
         
         ParallelCamera camera = new ParallelCamera();
@@ -59,32 +55,12 @@ public class Main extends Application {
         scene.setCamera(camera);
         
         
-        
-        
-        
-        
-        
-        // Create a VBox for the right side content
-        VBox rightVBox = new VBox();
-        rightVBox.setPrefWidth(GUI_SIZE[0]);
-        rightVBox.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, null, null)));
-
-        Label label1 = new Label("Label 1");
-        VBox.setMargin(label1, new javafx.geometry.Insets(10, 0, 0, 10));
-        Label label2 = new Label("Label 2");
-        VBox.setMargin(label2, new javafx.geometry.Insets(5, 0, 0, 10));
-        Button button = new Button("Click me");
-        VBox.setMargin(button, new javafx.geometry.Insets(5, 0, 0, 10));
-        ComboBox<String> comboBox = new ComboBox<>();
-        comboBox.getItems().addAll("Option 1", "Option 2", "Option 3");
-        VBox.setMargin(comboBox, new javafx.geometry.Insets(5, 0, 0, 10));
-        TextField textField = new TextField();
-        textField.setPromptText("Enter your text here");
-        VBox.setMargin(textField, new javafx.geometry.Insets(5, 0, 0, 10));
-        rightVBox.getChildren().addAll(label1, label2, button, comboBox, textField);
-       
-        // Set the VBox as the right content of the BorderPane
-        root.setRight(rightVBox);
+        VBox planetList = new VBox();
+        planetList.setBackground(new Background(new BackgroundFill(Color.rgb(100, 100, 100), null, null)));
+        planetList.getChildren().add(new TriangleButton("Earth"));
+        planetList.getChildren().add(new TriangleButton("Moon"));
+        planetList.setDepthTest(DepthTest.DISABLE);
+        root.setRight(planetList);
         
         
         
@@ -97,12 +73,10 @@ public class Main extends Application {
         Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
         
         Vector3D v = new Vector3D(new Point3D(100, -100, 100), Color.GREEN);
-        Vector3D v2 = new Vector3D(new Point3D(200, 0, 100), Color.RED);
-        Vector3D v3 = new Vector3D(new Point3D(100, -300, 0), Color.YELLOW);
         
         
         
-        Group group = new Group(body, axes, v, v2, v3);
+        Group group = new Group(body, axes, v);
         group.setTranslateX(SIMULATION_CENTER[0]);
         group.setTranslateY(SIMULATION_CENTER[1]);
         group.setTranslateZ(-500);
