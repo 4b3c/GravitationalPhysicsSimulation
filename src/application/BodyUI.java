@@ -1,10 +1,6 @@
 package application;
 
-import java.util.function.UnaryOperator;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.VBox;
 
 public class BodyUI extends VBox {
@@ -25,31 +21,11 @@ public class BodyUI extends VBox {
         optionsContainer = new EntriesVBox(DROP_WIDTH);
         VBox.setMargin(optionsContainer, new javafx.geometry.Insets(10, 0, 0, WIDTH - DROP_WIDTH));
         optionsContainer.setVisible(false);
-        TextField massField = optionsContainer.addEntryField("Mass :");
-        TextField radiusField = optionsContainer.addEntryField("Radius :");
-        TextField[] posField = optionsContainer.add3DEntryField("Position :", "X :", "Y :", "Z :");
-        TextField[] velField = optionsContainer.add3DEntryField("Velocity :", "X :", "Y :", "Z :");
         
         
         getChildren().addAll(expandButton);
         expandButton.button.setOnAction(event -> toggleOptions());
         
-        massField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println("Text changed: " + newValue);
-            }
-        });
-        massField.setTextFormatter(new TextFormatter<String>(new UnaryOperator<TextFormatter.Change>() {
-            @Override
-            public TextFormatter.Change apply(TextFormatter.Change change) {
-                String text = change.getText();
-                if (!text.matches("[.0-9]")) {
-                    return null;
-                }
-                return change;
-            }
-        }));
     }
 
     public void toggleOptions() {
@@ -62,5 +38,13 @@ public class BodyUI extends VBox {
             getChildren().remove(optionsContainer);
             expandButton.button.setText(this.planetName);
         }
+    }
+    
+    public TextField addEntryField(String text) {
+    	return optionsContainer.addEntryField(text);
+    }
+    
+    public TextField[] add3DEntryField(String text, String text1, String text2, String text3) {
+    	return optionsContainer.add3DEntryField(text, text1, text2, text3);
     }
 } 

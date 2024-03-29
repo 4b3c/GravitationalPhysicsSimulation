@@ -57,9 +57,6 @@ public class Main extends Application {
         
         VBox planetList = new VBox();
         planetList.setBackground(new Background(new BackgroundFill(Color.rgb(100, 100, 100), null, null)));
-        planetList.getChildren().add(new BodyUI("Sun"));
-        planetList.getChildren().add(new BodyUI("Earth"));
-        planetList.getChildren().add(new BodyUI("Moon"));
         planetList.setDepthTest(DepthTest.DISABLE);
         root.setRight(planetList);
         
@@ -67,6 +64,8 @@ public class Main extends Application {
 
         
         Body body = new Body("Earth", 40, 40, new Point3D(0, 0, 0), new Vector3D(new Point3D(100, 0, 0), Color.BLUE));
+        body.createUISelf();
+        planetList.getChildren().add(body.ui);
         body.setRotationAxis(Rotate.Y_AXIS);
         
         Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
