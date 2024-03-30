@@ -34,7 +34,6 @@ public class LinkedDouble {
 	public void set(double newValue) {
 		var = newValue;
 		field.setText("" + var);
-		System.out.println("WOWWEE  " + var + "  " + newValue);
 	}
 
 	public void addListener() {
@@ -42,16 +41,14 @@ public class LinkedDouble {
 	        @Override
 	        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 	            if (newValue == null || newValue.isEmpty()) {
-	                return; // Handle empty field if needed
+	                return;
 	            }
 
 	            try {
 	                double newDouble = Double.parseDouble(newValue);
 	            	var = newDouble;
 	            	action.performUpdates(newDouble);
-	            	System.out.println("passed");
 	            } catch (NumberFormatException e) {
-	                // Revert the text change to the previous value
 	                field.setText(oldValue);
 	            }
 	        }

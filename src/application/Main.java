@@ -62,20 +62,31 @@ public class Main extends Application {
         
         
 
+        Body sun = new Body("Sun", 56.12, 325439679.39, Color.YELLOW);
+//        Body earth = new Body("Earth", 34.21, 952.12, Color.AQUA);
+        Body moon = new Body("Moon", 16.21, 2352.12, Color.NAVAJOWHITE);
         
-        Body earth = new Body("Earth", 64.21, 4152.12, Color.AQUA);
-        earth.setPos(100, 0, -100);
+        sun.setPos(0, 0, 0);
+//        earth.setPos(250, 0, -180);
+//        earth.setVel(-0.9, 0, 0);
+        moon.setPos(10, -100, -220);
+        moon.setVel(0.9, 0, 0);
         
-        Body moon = new Body("Moon", 24.21, 1152.12, Color.NAVAJOWHITE);
-        moon.setPos(300, -100, 20);
-        
-        planetList.getChildren().add(earth.ui);
+        planetList.getChildren().add(sun.ui);
+//        planetList.getChildren().add(earth.ui);
         planetList.getChildren().add(moon.ui);
+        
+//        sun.calculateForce(earth);
+        sun.calculateForce(moon);
+//        earth.calculateForce(sun);
+//        earth.calculateForce(moon);
+        moon.calculateForce(sun);
+//        moon.calculateForce(earth);
         
         Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);        
         
         
-        Group group = new Group(earth, moon, axes);
+        Group group = new Group(axes, sun, moon);
         group.setTranslateX(SIMULATION_CENTER[0]);
         group.setTranslateY(SIMULATION_CENTER[1]);
         group.setTranslateZ(-500);
@@ -90,9 +101,17 @@ public class Main extends Application {
         Timeline gameLoop = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
         	handleRotation(scene);
         	t = t + 0.01;
-//        	body.setTranslateX(Math.sin(t) * 300);
-//            body.setTranslateZ(Math.cos(t) * 300);
-//            body.setRotate(t * 180 / Math.PI);
+
+//        	sun.calculateForce(earth);
+            sun.calculateForce(moon);
+//            earth.calculateForce(sun);
+//            earth.calculateForce(moon);
+            moon.calculateForce(sun);
+//            moon.calculateForce(earth);
+            
+            sun.timeTick();
+//            earth.timeTick();
+            moon.timeTick();
         }));
         
         gameLoop.setCycleCount(Animation.INDEFINITE);

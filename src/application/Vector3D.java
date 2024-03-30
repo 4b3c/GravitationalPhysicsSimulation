@@ -17,11 +17,18 @@ public class Vector3D extends Group {
 	private Point3D diff;
 	private Point3D diffn;
 	
+	private double x;
+	private double y;
+	private double z;
+	
 	public Vector3D(double x, double y, double z, Color color) {
 		Point3D start = new Point3D(0, 0, 0);
 		Point3D end = new Point3D(x, y, z);
 		PhongMaterial mat = new PhongMaterial(color);
 		
+		this.x = x;
+		this.y = y;
+		this.z = z;
 		
 		len = end.distance(start);
 		diff = end.subtract(start);
@@ -52,6 +59,10 @@ public class Vector3D extends Group {
 		Point3D start = new Point3D(0, 0, 0);
 		Point3D end = new Point3D(x, y, z);
 		
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		
 		len = end.distance(start);
 		diff = end.subtract(start);
 		diff = new Point3D(diff.getX(), -diff.getY(), diff.getZ());
@@ -68,6 +79,34 @@ public class Vector3D extends Group {
 		this.setTranslateX(start.getX());
 		this.setTranslateY(start.getY());
 		this.setTranslateZ(start.getZ());
+	}
+	
+	public void addVector(double x, double y, double z) {
+		updateEnd(this.x + x, this.y + y, this.z + z);
+	}
+	
+	public Point3D getAsPoint() {
+		return new Point3D(this.x, this.y, this.z);
+	}
+	
+	public double getX() {
+		return this.x;
+	}
+	
+	public double getY() {
+		return this.y;
+	}
+	
+	public double getZ() {
+		return this.z;
+	}
+	
+	public double magnitude() {
+		return getAsPoint().magnitude();
+	}
+	
+	public String toString() {
+		return String.format("Vector3D = [x = %.3f, y = %.3f, z = %.3f]", this.x, this.y, this.z);
 	}
 
 

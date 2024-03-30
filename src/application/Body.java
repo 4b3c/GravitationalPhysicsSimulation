@@ -1,5 +1,6 @@
 package application;
 
+import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -26,8 +27,9 @@ public class Body extends Group{
 	private TextField[] velField;
 	private Vector3D velocityVector;
 	
-	private Vector3D acc;
-	private Vector3D force;
+	private Vector3D accelerationVector;
+	private Vector3D forceVector;
+	
 	public BodyUI ui;
 	
 	
@@ -35,6 +37,7 @@ public class Body extends Group{
 		this.name = name;
 		planet = new Sphere(0);
 		planet.setMaterial(new PhongMaterial(color));
+		
 		velocityVector = new Vector3D(0, 0, 0, Color.RED);
 		ui = new BodyUI(this.name);
 		
@@ -62,8 +65,10 @@ public class Body extends Group{
 			velField[i].setText("0.0");
 		}
 		
+		forceVector = new Vector3D(0, 0, 0, Color.BLUE);
+		accelerationVector = new Vector3D(0, 0, 0, Color.BLUE);
 		
-		this.getChildren().addAll(planet, velocityVector);
+		this.getChildren().addAll(planet, velocityVector, forceVector, accelerationVector);
 		
 	}
 	
@@ -95,7 +100,7 @@ public class Body extends Group{
 	public void setPos(double x, double y, double z) {
 		pos[0].set(x);
 		pos[1].set(y);
-		pos[1].set(z);
+		pos[2].set(z);
 		posChanged();
 	}
 	
@@ -113,18 +118,53 @@ public class Body extends Group{
 	public void setVel(double x, double y, double z) {
 		vel[0].set(x);
 		vel[1].set(y);
-		vel[1].set(z);
+		vel[2].set(z);
 		velChanged();
-	}
-	
-	public double[] velPos() {
-		double[] velocity = {vel[0].get(), vel[1].get(), vel[2].get()};
-		return velocity;
 	}
 	
 	private void velChanged() {
 		velocityVector.updateEnd(vel[0].get(), vel[1].get(), vel[2].get());
 	}
+	
+	public void calculateForce(Body otherPlanet) {
+		final double G = 0.0000006674;
+		Point3D ourPosition = new Point3D(getPos()[0], getPos()[1], getPos()[2]);
+		Point3D theirPosition = new Point3D(otherPlanet.getPos()[0], otherPlanet.getPos()[1], otherPlanet.getPos()[2]);
+			
+		Point3D dist = theirPosition.subtract(ourPosition);
+		Point3D distNorm = dist.normalize();
+		double distMag = dist.magnitude();
+		double forceMag = (G * getMass() * otherPlanet.getMass()) / (distMag * distMag);
+			
+		forceVector.addVector(forceMag * distNorm.getX(), forceMag * distNorm.getY(), forceMag * distNorm.getZ());
+		accelerationVector.updateEnd(0, 0, 0);
+	}
+	
+	public void calculateAcceleration() {
+		accelerationVector.addVector(forceVector.getX() / mass.get(), forceVector.getY() / mass.get(), forceVector.getZ() / mass.get());
+		forceVector.updateEnd(0, 0, 0);
+	}
+	
+	public void calculateVelocity() {
+		if (this.name == "Moon") {
+			System.out.println(this.name + " V: " + vel[0].get() + ", " + vel[1].get() + ", " + vel[2].get());
+			System.out.println(this.name + " A: " + accelerationVector.getX() + ", " + accelerationVector.getY() + ", " + accelerationVector.getZ());
+			
+		}
+		this.setVel(vel[0].get() + accelerationVector.getX(), vel[1].get() + accelerationVector.getY(), vel[2].get() + accelerationVector.getZ());
+		if (this.name == "Moon") {
+			System.out.println(this.name + " A: " + accelerationVector + " NV: " + velocityVector);
+		}
+	}
+	
+	public void calculatePosition() {
+		this.setPos(pos[0].get() + velocityVector.getX(), pos[1].get() + velocityVector.getY(), pos[2].get() + velocityVector.getZ());
+	}
+	
+	public void timeTick() {
+		calculateAcceleration();
+		calculateVelocity();
+		calculatePosition();
+	}
  
-
 }
