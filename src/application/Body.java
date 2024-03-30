@@ -1,12 +1,10 @@
 package application;
 
-import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
-
-
 
 
 
@@ -33,37 +31,40 @@ public class Body extends Group{
 	public BodyUI ui;
 	
 	
-	public Body(String name, double radius, double mass, Point3D position, Point3D velocity) {
+	public Body(String name, double radius, double mass, Color color) {
 		this.name = name;
+		planet = new Sphere(0);
+		planet.setMaterial(new PhongMaterial(color));
+		velocityVector = new Vector3D(0, 0, 0, Color.RED);
 		ui = new BodyUI(this.name);
 		
 		radiusField = ui.addEntryField("Radius :");
 		updateAction radiusUpdate = (newValue) -> radiusChanged();
 		this.radius = new LinkedDouble(radius, radiusField, radiusUpdate);
+		radiusField.setText("" + this.radius.get());
 		
 		massField = ui.addEntryField("Mass :");
 		updateAction massUpdate = (newValue) -> massChanged();
 		this.mass = new LinkedDouble(mass, massField, massUpdate);
+		massField.setText("" + this.mass.get());
+		
 		
 		posField = ui.add3DEntryField("Position :", "X :", "Y :", "Z :");
-		updateAction posUpdate = (newValue) -> posChanged();
-		this.pos[0] = new LinkedDouble(position.getX(), posField[0], posUpdate);
-		this.pos[1] = new LinkedDouble(position.getY(), posField[1], posUpdate);
-		this.pos[2] = new LinkedDouble(position.getZ(), posField[2], posUpdate);
-		planet = new Sphere(this.radius.get());
-		
 		velField = ui.add3DEntryField("Velocity :", "X :", "Y :", "Z :");
+		updateAction posUpdate = (newValue) -> posChanged();
 		updateAction velUpdate = (newValue) -> velChanged();
-		this.vel[0] = new LinkedDouble(velocity.getX(), velField[0], velUpdate);
-		this.vel[1] = new LinkedDouble(velocity.getY(), velField[1], velUpdate);
-		this.vel[2] = new LinkedDouble(velocity.getZ(), velField[2], velUpdate);
-		velocityVector = new Vector3D(vel[0].get(), vel[1].get(), vel[2].get(), Color.RED);
-		
+		for (int i = 0; i < 3; i++) {
+			this.pos[i] = new LinkedDouble(0, posField[i], posUpdate);
+			this.vel[i] = new LinkedDouble(0, velField[i], velUpdate);
+		}
+		for (int i = 0; i < 3; i++) {
+			posField[i].setText("0.0");
+			velField[i].setText("0.0");
+		}
 		
 		
 		this.getChildren().addAll(planet, velocityVector);
 		
-        
 	}
 	
 	public void setRadius(double newValue) {

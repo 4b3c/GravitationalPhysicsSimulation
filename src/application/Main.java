@@ -63,17 +63,19 @@ public class Main extends Application {
         
 
         
-        Body body = new Body("Earth", 40, 40, new Point3D(0, 0, 0), new Point3D(100, 0, 0));
-        planetList.getChildren().add(body.ui);
-        body.setRotationAxis(Rotate.Y_AXIS);
+        Body earth = new Body("Earth", 64.21, 4152.12, Color.AQUA);
+        earth.setPos(100, 0, -100);
         
-        Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
+        Body moon = new Body("Moon", 24.21, 1152.12, Color.NAVAJOWHITE);
+        moon.setPos(300, -100, 20);
         
-        Vector3D v = new Vector3D(100, -100, 100, Color.GREEN);
+        planetList.getChildren().add(earth.ui);
+        planetList.getChildren().add(moon.ui);
+        
+        Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);        
         
         
-        
-        Group group = new Group(body, axes, v);
+        Group group = new Group(earth, moon, axes);
         group.setTranslateX(SIMULATION_CENTER[0]);
         group.setTranslateY(SIMULATION_CENTER[1]);
         group.setTranslateZ(-500);
