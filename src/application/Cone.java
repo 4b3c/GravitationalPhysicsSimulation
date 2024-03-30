@@ -1,7 +1,6 @@
 package application;
 
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.MeshView;
@@ -12,9 +11,8 @@ public class Cone extends Group {
 
 	int rounds = 360;
 	
-	public Cone(int r1, int r2, int h, Color color) {
+	public Cone(int r1, int r2, int h, PhongMaterial material) {
 	    Group cone = new Group();
-	    PhongMaterial material = new PhongMaterial(color);
 	
 	    float[] points = new float[rounds *12];
 	    float[] textCoords = {

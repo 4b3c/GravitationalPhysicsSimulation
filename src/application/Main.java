@@ -63,14 +63,13 @@ public class Main extends Application {
         
 
         
-        Body body = new Body("Earth", 40, 40, new Point3D(0, 0, 0), new Vector3D(new Point3D(100, 0, 0), Color.BLUE));
-        body.createUISelf();
+        Body body = new Body("Earth", 40, 40, new Point3D(0, 0, 0), new Point3D(100, 0, 0));
         planetList.getChildren().add(body.ui);
         body.setRotationAxis(Rotate.Y_AXIS);
         
         Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
         
-        Vector3D v = new Vector3D(new Point3D(100, -100, 100), Color.GREEN);
+        Vector3D v = new Vector3D(100, -100, 100, Color.GREEN);
         
         
         
@@ -89,9 +88,9 @@ public class Main extends Application {
         Timeline gameLoop = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
         	handleRotation(scene);
         	t = t + 0.01;
-        	body.setTranslateX(Math.sin(t) * 300);
-            body.setTranslateZ(Math.cos(t) * 300);
-            body.setRotate(t * 180 / Math.PI);
+//        	body.setTranslateX(Math.sin(t) * 300);
+//            body.setTranslateZ(Math.cos(t) * 300);
+//            body.setRotate(t * 180 / Math.PI);
         }));
         
         gameLoop.setCycleCount(Animation.INDEFINITE);

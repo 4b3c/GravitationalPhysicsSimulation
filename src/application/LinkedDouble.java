@@ -5,34 +5,43 @@ import java.util.function.UnaryOperator;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
+@FunctionalInterface
+interface updateAction {
+  void performUpdates(double newValue);
+}
 
 public class LinkedDouble {
 	
-	private double var;
-	private whatToDoWithIt updFun;
+	public double var;
+	public TextField field;
+	public updateAction action;
 	
-	public LinkedDouble(double value, whatToDoWithIt updateFunction) {
+	public LinkedDouble(double value, TextField textField, updateAction updateFunction) {
 		var = value;
-		updFun = updateFunction;
+		field = textField;
+		action = updateFunction;
+		
+		addListener();
 	}
-
+	
 	public double get() {
 		return var;
 	}
 	
-	public void set(Double newValue) {
+	public void set(double newValue) {
 		var = newValue;
-		updFun.perform(newValue);
+		field.setText("" + var);
 	}
-	
-	public void addListener(TextField field) {
+
+	public void addListener() {
 		field.setTextFormatter(new TextFormatter<String>(new UnaryOperator<TextFormatter.Change>() {
 
 			@Override
             public TextFormatter.Change apply(TextFormatter.Change change) {
             	try {
             		double newValue = Double.parseDouble(field.getText() + change.getText());
-            		set(newValue);
+            		var = newValue;
+            		action.performUpdates(newValue);
             		return change;
             	} catch (NumberFormatException e) {
             		return null;
