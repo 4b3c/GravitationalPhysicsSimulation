@@ -105,6 +105,10 @@ public class Vector3D extends Group {
 		return getAsPoint().magnitude();
 	}
 	
+	public void scaleBy(double scale) {
+		updateEnd(getX() * scale, getY() * scale, getZ() * scale);
+	}
+	
 	public String toString() {
 		return String.format("Vector3D = [x = %.3f, y = %.3f, z = %.3f]", this.x, this.y, this.z);
 	}

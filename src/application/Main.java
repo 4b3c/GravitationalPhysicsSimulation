@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Shape3D;
+import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
@@ -100,7 +101,7 @@ public class Main extends Application {
         // Set up the game loop
         Timeline gameLoop = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
         	handleRotation(scene);
-        	t = t + 0.01;
+        	t = t + 1;
 
 //        	sun.calculateForce(earth);
             sun.calculateForce(moon);
@@ -112,6 +113,14 @@ public class Main extends Application {
             sun.timeTick();
 //            earth.timeTick();
             moon.timeTick();
+            if (t > 25) {
+	            Sphere newSphere = new Sphere(4);
+	            newSphere.setTranslateX(moon.getPos()[0]);
+	            newSphere.setTranslateY(moon.getPos()[1]);
+	            newSphere.setTranslateZ(moon.getPos()[2]);
+	            group.getChildren().add(newSphere);
+	            t = 0;
+            }
         }));
         
         gameLoop.setCycleCount(Animation.INDEFINITE);
