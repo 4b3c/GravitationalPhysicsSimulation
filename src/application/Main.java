@@ -1,5 +1,7 @@
 package application;
 
+import application.Model3DClasses.Axis3D;
+import application.Model3DClasses.Body;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -8,6 +10,7 @@ import javafx.geometry.Point3D;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -33,7 +36,8 @@ public class Main extends Application {
     private boolean mouseClicked = false;
     private double[] mousePos = {0.0, 0.0};
     private double[] lastMousePos = {0.0, 0.0};
-    private double t = 0;
+    private boolean paused = false;
+    private int t = 0;
     
     public static Rotate xRotate = new Rotate(0, Rotate.X_AXIS);
     public static Rotate yRotate = new Rotate(0, Rotate.Y_AXIS);
@@ -101,26 +105,30 @@ public class Main extends Application {
         // Set up the game loop
         Timeline gameLoop = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
         	handleRotation(scene);
-        	t = t + 1;
+        	
+        	if (!paused) {
+        		t = t + 1;
 
-//        	sun.calculateForce(earth);
-            sun.calculateForce(moon);
-//            earth.calculateForce(sun);
-//            earth.calculateForce(moon);
-            moon.calculateForce(sun);
-//            moon.calculateForce(earth);
-            
-            sun.timeTick();
-//            earth.timeTick();
-            moon.timeTick();
-            if (t > 25) {
-	            Sphere newSphere = new Sphere(4);
-	            newSphere.setTranslateX(moon.getPos()[0]);
-	            newSphere.setTranslateY(moon.getPos()[1]);
-	            newSphere.setTranslateZ(moon.getPos()[2]);
-	            group.getChildren().add(newSphere);
-	            t = 0;
-            }
+	//        	sun.calculateForce(earth);
+	            sun.calculateForce(moon);
+	//            earth.calculateForce(sun);
+	//            earth.calculateForce(moon);
+	            moon.calculateForce(sun);
+	//            moon.calculateForce(earth);
+	            
+	            sun.timeTick();
+	//            earth.timeTick();
+	            moon.timeTick();
+     
+	            if (t > 25) {
+		            Sphere newSphere = new Sphere(4);
+		            newSphere.setTranslateX(moon.getPos()[0]);
+		            newSphere.setTranslateY(moon.getPos()[1]);
+		            newSphere.setTranslateZ(moon.getPos()[2]);
+		            group.getChildren().add(newSphere);
+		            t = 0;
+	            }
+	        }
         }));
         
         gameLoop.setCycleCount(Animation.INDEFINITE);
@@ -141,10 +149,11 @@ public class Main extends Application {
         scene.setOnMouseDragged(event -> updateMousePosition(text1, event));
         scene.setOnMousePressed(event -> { mouseClicked = true; });
         scene.setOnMouseReleased(event -> { mouseClicked = false; });
+        scene.setOnKeyPressed(event -> { if (event.getCode() == KeyCode.P) { paused = !paused; }});
     }
     
     private void updateMousePosition(Text text1, javafx.scene.input.MouseEvent event) {
-    	updateLastMousePos();
+    	lastMousePos = mousePos.clone();
     	mousePos[0] = event.getX();
         mousePos[1] = event.getY();
         text1.setText(String.format("Mouse Position: (%.1f, %.1f)", mousePos[0], mousePos[1]));
@@ -154,22 +163,9 @@ public class Main extends Application {
     	if (mouseClicked) {
     		xRotate.setAngle(xRotate.getAngle() + (mousePos[1] - lastMousePos[1]) / 2);
     		yRotate.setAngle(yRotate.getAngle() - (mousePos[0] - lastMousePos[0]) / 2);
-    		updateLastMousePos();
+    		lastMousePos = mousePos.clone();
     	}
     }
-    
-    private void updateLastMousePos() {
-    	lastMousePos[0] = mousePos[0];
-    	lastMousePos[1] = mousePos[1];
-    }
-    
-    public static void setMaterial(Shape3D shape) {
-        final PhongMaterial blueMaterial = new PhongMaterial();
-        blueMaterial.setDiffuseColor(Color.BLUE);
-        blueMaterial.setSpecularColor(Color.LIGHTBLUE);
-        shape.setMaterial(blueMaterial);
-    }
-
 
     public static void main(String[] args) {
         launch(args);

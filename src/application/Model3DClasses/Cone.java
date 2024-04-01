@@ -1,4 +1,4 @@
-package application;
+package application.Model3DClasses;
 
 import javafx.scene.Group;
 import javafx.scene.paint.PhongMaterial;

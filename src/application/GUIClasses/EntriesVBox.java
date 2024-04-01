@@ -1,4 +1,4 @@
-package application;
+package application.GUIClasses;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;

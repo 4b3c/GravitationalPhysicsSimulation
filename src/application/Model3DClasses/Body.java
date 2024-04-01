@@ -1,13 +1,14 @@
-package application;
+package application.Model3DClasses;
 
+import application.UpdateAction;
+import application.GUIClasses.BodyUI;
+import application.GUIClasses.LinkedDouble;
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
-
-
 
 public class Body extends Group{
 	
@@ -45,20 +46,20 @@ public class Body extends Group{
 		ui = new BodyUI(this.name);
 		
 		radiusField = ui.addEntryField("Radius :");
-		updateAction radiusUpdate = (newValue) -> radiusChanged();
+		UpdateAction radiusUpdate = (newValue) -> radiusChanged();
 		this.radius = new LinkedDouble(radius, radiusField, radiusUpdate);
 		radiusField.setText("" + this.radius.get());
 		
 		massField = ui.addEntryField("Mass :");
-		updateAction massUpdate = (newValue) -> massChanged();
+		UpdateAction massUpdate = (newValue) -> massChanged();
 		this.mass = new LinkedDouble(mass, massField, massUpdate);
 		massField.setText("" + this.mass.get());
 		
 		
 		posField = ui.add3DEntryField("Position :", "X :", "Y :", "Z :");
 		velField = ui.add3DEntryField("Velocity :", "X :", "Y :", "Z :");
-		updateAction posUpdate = (newValue) -> posChanged();
-		updateAction velUpdate = (newValue) -> velChanged();
+		UpdateAction posUpdate = (newValue) -> posChanged();
+		UpdateAction velUpdate = (newValue) -> velChanged();
 		for (int i = 0; i < 3; i++) {
 			this.pos[i] = new LinkedDouble(0, posField[i], posUpdate);
 			this.vel[i] = new LinkedDouble(0, velField[i], velUpdate);

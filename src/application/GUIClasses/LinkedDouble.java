@@ -1,28 +1,21 @@
-package application;
+package application.GUIClasses;
 
-import java.util.function.UnaryOperator;
-
+import application.UpdateAction;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.IndexRange;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 
-@FunctionalInterface
-interface updateAction {
-  void performUpdates(double newValue);
-}
 
 public class LinkedDouble {
 	
 	public double var;
 	public TextField field;
-	public updateAction action;
+	public UpdateAction action;
 	
-	public LinkedDouble(double value, TextField textField, updateAction updateFunction) {
+	public LinkedDouble(double value, TextField textField, UpdateAction radiusUpdate) {
 		var = value;
 		field = textField;
-		action = updateFunction;
+		action = radiusUpdate;
 		
 		addListener();
 	}
