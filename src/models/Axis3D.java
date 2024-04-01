@@ -1,4 +1,4 @@
-package application.Model3DClasses;
+package models;
 
 import javafx.geometry.Point3D;
 import javafx.scene.Group;

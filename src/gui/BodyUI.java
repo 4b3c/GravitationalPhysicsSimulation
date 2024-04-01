@@ -1,4 +1,4 @@
-package application.GUIClasses;
+package gui;
 
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;

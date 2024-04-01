@@ -1,12 +1,9 @@
 package application;
 
-import application.Model3DClasses.Axis3D;
-import application.Model3DClasses.Body;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.geometry.Point3D;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -16,13 +13,13 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import models.Axis3D;
+import models.Body;
 import javafx.scene.ParallelCamera;
 
 

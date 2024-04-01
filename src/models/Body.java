@@ -1,8 +1,8 @@
-package application.Model3DClasses;
+package models;
 
 import application.UpdateAction;
-import application.GUIClasses.BodyUI;
-import application.GUIClasses.LinkedDouble;
+import gui.BodyUI;
+import gui.LinkedDouble;
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;

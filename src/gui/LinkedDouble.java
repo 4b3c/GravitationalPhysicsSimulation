@@ -1,4 +1,4 @@
-package application.GUIClasses;
+package gui;
 
 import application.UpdateAction;
 import javafx.beans.value.ChangeListener;
