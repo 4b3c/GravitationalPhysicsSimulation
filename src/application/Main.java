@@ -13,13 +13,11 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import models.Axis3D;
-import models.Body;
 import javafx.scene.ParallelCamera;
 
 
@@ -34,7 +32,6 @@ public class Main extends Application {
     private double[] mousePos = {0.0, 0.0};
     private double[] lastMousePos = {0.0, 0.0};
     private boolean paused = false;
-    private int t = 0;
     
     public static Rotate xRotate = new Rotate(0, Rotate.X_AXIS);
     public static Rotate yRotate = new Rotate(0, Rotate.Y_AXIS);
@@ -62,33 +59,14 @@ public class Main extends Application {
         planetList.setDepthTest(DepthTest.DISABLE);
         root.setRight(planetList);
         
-        
+        Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
+        Group group = new Group(axes);
 
-        Body sun = new Body("Sun", 56.12, 325439679.39, Color.YELLOW);
-//        Body earth = new Body("Earth", 34.21, 952.12, Color.AQUA);
-        Body moon = new Body("Moon", 16.21, 2352.12, Color.NAVAJOWHITE);
-        
-        sun.setPos(0, 0, 0);
-//        earth.setPos(250, 0, -180);
-//        earth.setVel(-0.9, 0, 0);
-        moon.setPos(10, -100, -220);
-        moon.setVel(0.9, 0, 0);
-        
-        planetList.getChildren().add(sun.ui);
-//        planetList.getChildren().add(earth.ui);
-        planetList.getChildren().add(moon.ui);
-        
-//        sun.calculateForce(earth);
-        sun.calculateForce(moon);
-//        earth.calculateForce(sun);
-//        earth.calculateForce(moon);
-        moon.calculateForce(sun);
-//        moon.calculateForce(earth);
-        
-        Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);        
+        SolarSystem system = new SolarSystem("StableSunMoon.txt");
+        system.addPlanetUIs(planetList);
+        system.addToGroup(group);
         
         
-        Group group = new Group(axes, sun, moon);
         group.setTranslateX(SIMULATION_CENTER[0]);
         group.setTranslateY(SIMULATION_CENTER[1]);
         group.setTranslateZ(-500);
@@ -96,36 +74,15 @@ public class Main extends Application {
         
         
         root.getChildren().addAll(mousePosText, group);
-        
-
             
         // Set up the game loop
         Timeline gameLoop = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
         	handleRotation(scene);
         	
         	if (!paused) {
-        		t = t + 1;
-
-	//        	sun.calculateForce(earth);
-	            sun.calculateForce(moon);
-	//            earth.calculateForce(sun);
-	//            earth.calculateForce(moon);
-	            moon.calculateForce(sun);
-	//            moon.calculateForce(earth);
-	            
-	            sun.timeTick();
-	//            earth.timeTick();
-	            moon.timeTick();
-     
-	            if (t > 25) {
-		            Sphere newSphere = new Sphere(4);
-		            newSphere.setTranslateX(moon.getPos()[0]);
-		            newSphere.setTranslateY(moon.getPos()[1]);
-		            newSphere.setTranslateZ(moon.getPos()[2]);
-		            group.getChildren().add(newSphere);
-		            t = 0;
-	            }
-	        }
+        		system.timeTick();
+ 	        }
+        	
         }));
         
         gameLoop.setCycleCount(Animation.INDEFINITE);

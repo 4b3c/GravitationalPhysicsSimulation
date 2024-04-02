@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 
-public class Body extends Group{
+public class Body extends Group {
 	
 	private String name;
 	
@@ -37,10 +37,9 @@ public class Body extends Group{
 	public BodyUI ui;
 	
 	
-	public Body(String name, double radius, double mass, Color color) {
+	public Body(String name, double radius, double mass) {
 		this.name = name;
 		planet = new Sphere(0);
-		planet.setMaterial(new PhongMaterial(color));
 		
 		velocityVector = new Vector3D(0, 0, 0, Color.RED);
 		ui = new BodyUI(this.name);
@@ -74,6 +73,10 @@ public class Body extends Group{
 		
 		this.getChildren().addAll(planet, velocityVector, forceVector, accelerationVector);
 		
+	}
+	
+	public void setColor(Color color) {
+		planet.setMaterial(new PhongMaterial(color));
 	}
 	
 	public void setRadius(double newValue) {
@@ -217,6 +220,10 @@ public class Body extends Group{
 		calculateAcceleration();
 		calculateVelocity();
 		calculatePosition();
+	}
+	
+	public String toString() {
+		return String.format("%s: {Mass: %.2f, Radius: %.2f}", this.name, this.mass.get(), this.radius.get());
 	}
  
 }
