@@ -33,13 +33,17 @@ public class SolarSystem {
 			scnr.next(); // Skip the text "Velocity:"
 			planet.setVel(scnr.nextDouble(), scnr.nextDouble(), scnr.nextDouble());
 			planets.add(planet);
+			System.out.println(planet);
 		}
 		
+		calculateAllForces();
+		for (Body planet : planets)
+			planet.calculateAcceleration();
 	}
 	
 	public void addPlanetUIs(VBox vbox) {
 		for (Body planet : planets)
-			vbox.getChildren().add(planet);
+			vbox.getChildren().add(planet.ui);
 	}
 	
 	public void addToGroup(Group group) {

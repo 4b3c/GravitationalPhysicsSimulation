@@ -31,7 +31,7 @@ public class Main extends Application {
     private boolean mouseClicked = false;
     private double[] mousePos = {0.0, 0.0};
     private double[] lastMousePos = {0.0, 0.0};
-    private boolean paused = false;
+    private boolean paused = true;
     
     public static Rotate xRotate = new Rotate(0, Rotate.X_AXIS);
     public static Rotate yRotate = new Rotate(0, Rotate.Y_AXIS);
@@ -57,7 +57,6 @@ public class Main extends Application {
         VBox planetList = new VBox();
         planetList.setBackground(new Background(new BackgroundFill(Color.rgb(100, 100, 100), null, null)));
         planetList.setDepthTest(DepthTest.DISABLE);
-        root.setRight(planetList);
         
         Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
         Group group = new Group(axes);
@@ -66,7 +65,7 @@ public class Main extends Application {
         system.addPlanetUIs(planetList);
         system.addToGroup(group);
         
-        
+        root.setRight(planetList);
         group.setTranslateX(SIMULATION_CENTER[0]);
         group.setTranslateY(SIMULATION_CENTER[1]);
         group.setTranslateZ(-500);

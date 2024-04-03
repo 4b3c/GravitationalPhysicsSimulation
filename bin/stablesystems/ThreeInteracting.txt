@@ -1,0 +1,14 @@
+Planet1 21.3 1.321E30
+Color: 29 243 120
+Position: 20 0 100
+Velocity: -0.5 0 0
+
+Planet2 16.21 1.412E30
+Color: 230 110 120
+Position: 10 -40 -100
+Velocity: 0.5 0 0
+
+Planet3 19.3 1.202E30
+Color: 91 129 230
+Position: 40 -70 -10
+Velocity: 0.1 0.1 0.1

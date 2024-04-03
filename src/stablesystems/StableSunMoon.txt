@@ -1,9 +1,9 @@
-Sun 56.12 325439679.39
+Sun 56.12 3.2543E30
 Color: 255 255 51
 Position: 0 0 0
 Velocity: 0 0 0
 
-Moon 16.21 2352.12
+Moon 16.21 2.352E22
 Color: 190 177 168
 Position: 10 -100 -220
 Velocity: 0.9 0 0

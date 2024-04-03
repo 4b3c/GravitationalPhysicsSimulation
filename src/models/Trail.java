@@ -3,6 +3,7 @@ package models;
 import java.util.LinkedList;
 
 import javafx.scene.Group;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 
 public class Trail {
@@ -10,8 +11,8 @@ public class Trail {
 	  private LinkedList<Sphere> queue;
 	  private Body planet;
 	  private Group group;
-	  private int trailLength = 50;
-	  private int markSeparation = 10;
+	  private int trailLength = 300;
+	  private int markSeparation = 2;
 	  private int timeVar = 0;
 
 	  public Trail(Body planet, Group group) {
@@ -42,6 +43,7 @@ public class Trail {
 	  
 	  public void addMark() {
 		  Sphere mark = new Sphere(3);
+		  mark.setMaterial(new PhongMaterial(planet.getColor()));
 		  mark.setTranslateX(planet.getPos()[0]);
 		  mark.setTranslateY(planet.getPos()[1]);
 		  mark.setTranslateZ(planet.getPos()[2]);

@@ -34,6 +34,7 @@ public class Body extends Group {
 	private double[] force = {0, 0, 0};
 	private Vector3D forceVector;
 	
+	private Color color;
 	public BodyUI ui;
 	
 	
@@ -71,11 +72,12 @@ public class Body extends Group {
 		forceVector = new Vector3D(0, 0, 0, Color.BLUE);
 		accelerationVector = new Vector3D(0, 0, 0, Color.BLUE);
 		
-		this.getChildren().addAll(planet, velocityVector, forceVector, accelerationVector);
+		this.getChildren().addAll(planet, velocityVector, accelerationVector);
 		
 	}
 	
 	public void setColor(Color color) {
+		this.color = color;
 		planet.setMaterial(new PhongMaterial(color));
 	}
 	
@@ -164,7 +166,7 @@ public class Body extends Group {
 	
 	private void accChanged() {
 		accelerationVector.updateEnd(acc[0], acc[1], acc[2]);
-		accelerationVector.scaleBy(10000);
+		accelerationVector.scaleBy(3000);
 	}
 	
 	public double[] getForce() {
@@ -184,19 +186,19 @@ public class Body extends Group {
 	
 	private void forceChanged() {
 		forceVector.updateEnd(force[0], force[1], force[2]);
-//		forceVector.scaleBy(100000);
+		forceVector.scaleBy(100000);
 	}
 	
 	
 	
 	public void calculateForce(Body otherPlanet) {
-		final double G = 0.0000006674;
+		final double G = 0.00000000006674;
 		Point3D ourPosition = new Point3D(getPos()[0], getPos()[1], getPos()[2]);
 		Point3D theirPosition = new Point3D(otherPlanet.getPos()[0], otherPlanet.getPos()[1], otherPlanet.getPos()[2]);
 			
 		Point3D dist = theirPosition.subtract(ourPosition);
 		Point3D distNorm = dist.normalize();
-		double distMag = dist.magnitude();
+		double distMag = dist.magnitude() * 1000000000;
 		double forceMag = (G * getMass() * otherPlanet.getMass()) / (distMag * distMag);
 		
 		addToForce(forceMag * distNorm.getX(), forceMag * distNorm.getY(), forceMag * distNorm.getZ());
@@ -222,8 +224,14 @@ public class Body extends Group {
 		calculatePosition();
 	}
 	
+	public Color getColor() {
+		return this.color;
+	}
+	
 	public String toString() {
-		return String.format("%s: {Mass: %.2f, Radius: %.2f}", this.name, this.mass.get(), this.radius.get());
+		return String.format("%s: {Mass: %.2f, Radius: %.2f, Pos: %.2f, %.2f, %.2f}", 
+				this.name, this.mass.get(), this.radius.get(), pos[0].get(), pos[1].get(), pos[2].get());
+		
 	}
  
 }
