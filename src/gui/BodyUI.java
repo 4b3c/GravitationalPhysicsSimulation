@@ -20,10 +20,10 @@ public class BodyUI extends VBox {
         
         optionsContainer = new EntriesVBox(DROP_WIDTH);
         VBox.setMargin(optionsContainer, new javafx.geometry.Insets(10, 0, 0, WIDTH - DROP_WIDTH));
-        optionsContainer.setVisible(false);
+//        optionsContainer.setVisible(false);
         
         
-        getChildren().addAll(expandButton);
+        getChildren().addAll(expandButton, optionsContainer);
         expandButton.button.setOnAction(event -> toggleOptions());
         
     }
