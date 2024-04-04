@@ -5,3 +5,5 @@ of each body can be calculated, and then the velocities and positions can be upd
 
 
 ![image](https://github.com/4b3c/GravitationalPhysicsSimulation/assets/58718191/999cf744-2c25-403f-8640-5ac97dffbb8a)
+
+![image](https://github.com/4b3c/GravitationalPhysicsSimulation/assets/58718191/8cd69259-7540-4bb3-8a3a-03def56a7c1b)
