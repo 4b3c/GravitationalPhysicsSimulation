@@ -75,13 +75,13 @@ public class Body extends Group {
 		CheckBox showVectors = ui.addCheckBox("Show Vectors :");
 		
 		ChangeListener<Boolean> vectorBoxListener = (observable, oldValue, newValue) -> {
-		    if (newValue == false) {
-		        getChildren().remove(velocityVector);
-		        getChildren().remove(accelerationVector);
-		    } else {
-		    	getChildren().add(velocityVector);
-		        getChildren().add(accelerationVector);
-		    }
+			if (newValue == false) {
+				getChildren().remove(velocityVector);
+				getChildren().remove(accelerationVector);
+			} else {
+				getChildren().add(velocityVector);
+				getChildren().add(accelerationVector);
+			}
 		};
 		
 		showVectors.selectedProperty().addListener(vectorBoxListener);

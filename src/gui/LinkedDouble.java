@@ -30,22 +30,22 @@ public class LinkedDouble {
 	}
 
 	public void addListener() {
-	    field.textProperty().addListener(new ChangeListener<String>() {
-	        @Override
-	        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-	            if (newValue == null || newValue.isEmpty()) {
-	                return;
-	            }
+		field.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (newValue == null || newValue.isEmpty()) {
+					return;
+				}
 
-	            try {
-	                double newDouble = Double.parseDouble(newValue);
-	            	var = newDouble;
-	            	action.performUpdates(newDouble);
-	            } catch (NumberFormatException e) {
-	                field.setText(oldValue);
-	            }
-	        }
-	    });
+				try {
+					double newDouble = Double.parseDouble(newValue);
+					var = newDouble;
+					action.performUpdates(newDouble);
+				} catch (NumberFormatException e) {
+					field.setText(oldValue);
+				}
+			}
+		});
 	}
 	
 

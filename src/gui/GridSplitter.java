@@ -44,16 +44,16 @@ public class GridSplitter extends GridPane {
 	
 	public TextField addTextBox(int column) {
 		DropShadow shadow = new DropShadow();
-        shadow.setSpread(0.2);
-        shadow.setColor(Color.rgb(80, 80, 80));
-        
+		shadow.setSpread(0.2);
+		shadow.setColor(Color.rgb(80, 80, 80));
+		
 		TextField entry = new TextField();
 		entry.setBackground(new Background(new BackgroundFill(Color.rgb(80, 80, 80), null, null)));
 		entry.setStyle("-fx-text-fill: white;");
 		GridPane.setMargin(entry, new javafx.geometry.Insets(2, 2, 2, 2));
-        entry.setEffect(shadow);
-        
-        setConstraints(entry, column, 0);
+		entry.setEffect(shadow);
+		
+		setConstraints(entry, column, 0);
 		getChildren().add(entry);
 		
 		return entry;
@@ -61,15 +61,15 @@ public class GridSplitter extends GridPane {
 	
 	public CheckBox addCheckBox(int column) {
 		DropShadow shadow = new DropShadow();
-        shadow.setSpread(0.2);
-        shadow.setColor(Color.rgb(80, 80, 80));
-        
-        CheckBox checkBox = new CheckBox();
-        checkBox.getStyleClass().add("custom-checkbox");
+		shadow.setSpread(0.2);
+		shadow.setColor(Color.rgb(80, 80, 80));
+		
+		CheckBox checkBox = new CheckBox();
+		checkBox.getStyleClass().add("custom-checkbox");
 		GridPane.setMargin(checkBox, new javafx.geometry.Insets(5, 5, 5, 5));
 		checkBox.setEffect(shadow);
-        
-        setConstraints(checkBox, column, 0);
+		
+		setConstraints(checkBox, column, 0);
 		getChildren().add(checkBox);
 		
 		return checkBox;

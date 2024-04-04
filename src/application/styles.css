@@ -1,19 +1,19 @@
 .custom-checkbox .box {
-    -fx-background-color: rgb(80, 80, 80);
+	-fx-background-color: rgb(80, 80, 80);
 }
-    
+	
 :checked > .box > .mark {
-    -fx-background-color: white;
+	-fx-background-color: white;
 }
 
 .play-pause-button {
-    -fx-background-color: white;
-    -fx-cursor: hand;
+	-fx-background-color: white;
+	-fx-cursor: hand;
 }
 
 .play-pause-button[pressed] {
-    -fx-shape: rect;
-    -fx-fill: black;
-    -fx-pref-width: 10;
-    -fx-pref-height: 10;
+	-fx-shape: rect;
+	-fx-fill: black;
+	-fx-pref-width: 10;
+	-fx-pref-height: 10;
 }
