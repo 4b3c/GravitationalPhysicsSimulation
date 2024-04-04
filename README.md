@@ -1,6 +1,6 @@
 I created this project as a joint Honors Contract for my physics and programming classes. It serves to simulate the
 orbits of bodies of variable masses, locations, and initial velocities. Each frame, the forces between each body are
-calculated using Newtons's universal law of gravitation. Once the  dimensional force is calculated, the accelerations
+calculated using Newtons's universal law of gravitation. Once the 3 dimensional force is calculated, the accelerations
 of each body can be calculated, and then the velocities and positions can be updated.
 
 
