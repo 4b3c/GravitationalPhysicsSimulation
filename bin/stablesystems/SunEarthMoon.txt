@@ -19,6 +19,6 @@ Position: 149 3 0
 Velocity: 0 0 0.94
 
 Mars 13.41 6.39E23
-Color: 255 127 80
+Color: 205 97 82
 Position: 228 10 0
 Velocity: 0 0 0.76

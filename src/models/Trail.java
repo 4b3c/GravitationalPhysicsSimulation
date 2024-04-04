@@ -12,7 +12,7 @@ public class Trail {
 	  private Body planet;
 	  private Group group;
 	  private int trailLength = 500;
-	  private int markSeparation = 2;
+	  private int markSeparation = 3;
 	  private int timeVar = 0;
 
 	  public Trail(Body planet, Group group) {
@@ -49,8 +49,17 @@ public class Trail {
 		  mark.setTranslateZ(planet.getPos()[2]);
 		  group.getChildren().add(mark);
 		  enqueue(mark);
-		  if (size() > trailLength) {
-			  removeMark();
+		  if (size() > 10) {
+			  if (Math.abs(queue.peek().getTranslateX() - planet.getPos()[0]) < 5) {
+			    	if (Math.abs(queue.peek().getTranslateY() - planet.getPos()[1]) < 5) {
+			    		if (Math.abs(queue.peek().getTranslateZ() - planet.getPos()[2]) < 5) {
+			    			removeMark();
+			    		}
+			    	}
+			    }
+			  if (size() > trailLength) {
+				  removeMark();  
+			  }
 		  }
 	  }
 	  
