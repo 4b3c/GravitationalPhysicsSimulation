@@ -5,3 +5,15 @@
 :checked > .box > .mark {
     -fx-background-color: white;
 }
+
+.play-pause-button {
+    -fx-background-color: white;
+    -fx-cursor: hand;
+}
+
+.play-pause-button[pressed] {
+    -fx-shape: rect;
+    -fx-fill: black;
+    -fx-pref-width: 10;
+    -fx-pref-height: 10;
+}

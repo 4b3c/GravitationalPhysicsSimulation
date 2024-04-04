@@ -28,6 +28,7 @@ public class BodyUI extends VBox {
         
         getChildren().add(expandButton);
         expandButton.button.setOnAction(event -> toggleOptions());
+        expandButton.triangle.setOnMouseClicked(event -> toggleOptions());
         
         numOfCreated++;
         

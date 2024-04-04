@@ -10,7 +10,7 @@ import javafx.scene.shape.Polygon;
 
 public class TriangleButton extends Group {
 
-    private final Polygon triangle;
+    public final Polygon triangle;
     public Button button;
     private boolean isDownward = true;
 
@@ -32,6 +32,7 @@ public class TriangleButton extends Group {
         getChildren().addAll(button, triangle);
 
         button.setOnAction(event -> toggleTriangle());
+        triangle.setOnMouseClicked(event -> toggleTriangle());
     }
 
     private Polygon createTriangle() {
