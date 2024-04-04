@@ -99,6 +99,7 @@ public class Main extends Application {
 			
 
 		setInputEvents(scene, mousePosText);
+		pausePlay();
 
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Gravitational Physics Simulation");
