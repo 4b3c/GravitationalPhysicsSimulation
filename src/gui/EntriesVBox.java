@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
@@ -67,6 +68,17 @@ public class EntriesVBox extends VBox {
         getChildren().add(labelAndEntry);
         
         return fields;
+	}
+	
+	public CheckBox addCheckBox(String text) {
+		double[] widths = {this.width / 3, this.width * 2 / 3};
+        GridSplitter labelAndBox = new GridSplitter(widths, 2);
+        labelAndBox.addText(text, 0);
+        CheckBox field = labelAndBox.addCheckBox(1);
+        
+        getChildren().add(labelAndBox);
+        
+        return field;
 	}
 
 }

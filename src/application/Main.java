@@ -37,6 +37,8 @@ public class Main extends Application {
     public static Rotate yRotate = new Rotate(0, Rotate.Y_AXIS);
     public static Rotate zRotate = new Rotate(0, Rotate.Z_AXIS);
     
+    public static final double GRAVITATIONAL_CONSTANT = 0.00000000006674;
+    public static final double SCALE = 1000000000;
 
     @Override
     public void start(Stage primaryStage) {
@@ -53,6 +55,8 @@ public class Main extends Application {
         Scene scene = new Scene(root, WINDOW_SIZE[0], WINDOW_SIZE[1], true);
         scene.setCamera(camera);
         
+        String stylesheet = getClass().getResource("styles.css").toExternalForm();
+        scene.getStylesheets().add(stylesheet);
         
         VBox planetList = new VBox();
         planetList.setBackground(new Background(new BackgroundFill(Color.rgb(100, 100, 100), null, null)));
@@ -61,7 +65,7 @@ public class Main extends Application {
         Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
         Group group = new Group(axes);
 
-        SolarSystem system = new SolarSystem("StableSunMoon.txt");
+        SolarSystem system = new SolarSystem("SunEarthMoon.txt");
         system.addPlanetUIs(planetList);
         system.addToGroup(group);
         

@@ -1,10 +1,13 @@
 package models;
 
+import application.Main;
 import application.UpdateAction;
 import gui.BodyUI;
 import gui.LinkedDouble;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -69,10 +72,25 @@ public class Body extends Group {
 			velField[i].setText("0.0");
 		}
 		
+		CheckBox showVectors = ui.addCheckBox("Show Vectors :");
+		
+		ChangeListener<Boolean> vectorBoxListener = (observable, oldValue, newValue) -> {
+		    if (newValue == false) {
+		        getChildren().remove(velocityVector);
+		        getChildren().remove(accelerationVector);
+		    } else {
+		    	getChildren().add(velocityVector);
+		        getChildren().add(accelerationVector);
+		    }
+		};
+		
+		showVectors.selectedProperty().addListener(vectorBoxListener);
+		showVectors.setSelected(false);
+		
 		forceVector = new Vector3D(0, 0, 0, Color.BLUE);
 		accelerationVector = new Vector3D(0, 0, 0, Color.BLUE);
 		
-		this.getChildren().addAll(planet, velocityVector, accelerationVector);
+		this.getChildren().addAll(planet);
 		
 	}
 	
@@ -186,20 +204,19 @@ public class Body extends Group {
 	
 	private void forceChanged() {
 		forceVector.updateEnd(force[0], force[1], force[2]);
-		forceVector.scaleBy(100000);
+		forceVector.scaleBy(3000);
 	}
 	
 	
 	
 	public void calculateForce(Body otherPlanet) {
-		final double G = 0.00000000006674;
 		Point3D ourPosition = new Point3D(getPos()[0], getPos()[1], getPos()[2]);
 		Point3D theirPosition = new Point3D(otherPlanet.getPos()[0], otherPlanet.getPos()[1], otherPlanet.getPos()[2]);
 			
 		Point3D dist = theirPosition.subtract(ourPosition);
 		Point3D distNorm = dist.normalize();
-		double distMag = dist.magnitude() * 1000000000;
-		double forceMag = (G * getMass() * otherPlanet.getMass()) / (distMag * distMag);
+		double distMag = dist.magnitude() * Main.SCALE;
+		double forceMag = (Main.GRAVITATIONAL_CONSTANT * getMass() * otherPlanet.getMass()) / (distMag * distMag);
 		
 		addToForce(forceMag * distNorm.getX(), forceMag * distNorm.getY(), forceMag * distNorm.getZ());
 		setAcc(0, 0, 0);

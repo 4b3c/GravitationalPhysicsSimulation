@@ -11,7 +11,7 @@ public class Trail {
 	  private LinkedList<Sphere> queue;
 	  private Body planet;
 	  private Group group;
-	  private int trailLength = 300;
+	  private int trailLength = 500;
 	  private int markSeparation = 2;
 	  private int timeVar = 0;
 

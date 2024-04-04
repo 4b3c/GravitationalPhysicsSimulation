@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
@@ -56,6 +57,22 @@ public class GridSplitter extends GridPane {
 		getChildren().add(entry);
 		
 		return entry;
+	}
+	
+	public CheckBox addCheckBox(int column) {
+		DropShadow shadow = new DropShadow();
+        shadow.setSpread(0.2);
+        shadow.setColor(Color.rgb(80, 80, 80));
+        
+        CheckBox checkBox = new CheckBox();
+        checkBox.getStyleClass().add("custom-checkbox");
+		GridPane.setMargin(checkBox, new javafx.geometry.Insets(5, 5, 5, 5));
+		checkBox.setEffect(shadow);
+        
+        setConstraints(checkBox, column, 0);
+		getChildren().add(checkBox);
+		
+		return checkBox;
 	}
 
 }
