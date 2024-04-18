@@ -1,5 +1,11 @@
 package application;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import gui.PauseButton;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -8,6 +14,7 @@ import javafx.application.Application;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -20,6 +27,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import models.Axis3D;
 import javafx.scene.ParallelCamera;
+import javafx.embed.swing.SwingFXUtils;
 
 
 public class Main extends Application {
@@ -40,6 +48,8 @@ public class Main extends Application {
 	private double[] lastMousePos = {0.0, 0.0};
 	private boolean paused = true;
 	private PauseButton playbutton;
+	
+	public Scene scene;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -53,7 +63,7 @@ public class Main extends Application {
 		
 		ParallelCamera camera = new ParallelCamera();
 		camera.setTranslateZ(-250);
-		Scene scene = new Scene(root, WINDOW_SIZE[0], WINDOW_SIZE[1], true);
+		scene = new Scene(root, WINDOW_SIZE[0], WINDOW_SIZE[1], true);
 		scene.setCamera(camera);
 		
 		String stylesheet = getClass().getResource("styles.css").toExternalForm();
@@ -110,6 +120,7 @@ public class Main extends Application {
 	private void pausePlay() {
 		paused = !paused;
 		playbutton.toggle();
+		this.captureScene(scene, "screenshot1.png");
 	}
 	
 	private void setInputEvents(Scene scene, Text text1) {
@@ -138,6 +149,26 @@ public class Main extends Application {
 			lastMousePos = mousePos.clone();
 		}
 	}
+	
+    public void captureScene(Scene scene, String filename) {
+        try {
+            // Capture the screenshot
+            WritableImage image = scene.snapshot(null);
+
+            // Convert the image to a buffered image
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+
+            // Create a file object
+            File file = new File(filename);
+
+            // Write the buffered image to the file
+            ImageIO.write(bufferedImage, "png", file);
+
+            System.out.println("Screenshot saved to: " + filename);
+        } catch (IOException e) {
+            System.out.println("Failed to capture screenshot: " + e.getMessage());
+        }
+    }
 
 	public static void main(String[] args) {
 		launch(args);
