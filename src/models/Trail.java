@@ -9,7 +9,7 @@ import javafx.scene.shape.Sphere;
 public class Trail {
 
 	private LinkedList<Sphere> queue;
-	private Body planet;
+	public Body planet;
 	private Group group;
 	private int trailLength = 500;
 	private int markSeparation = 3;
@@ -22,11 +22,11 @@ public class Trail {
 	}
 
 	public void enqueue(Sphere sphere) {
-		queue.addLast(sphere);
+		queue.add(sphere);
 	}
 
 	public Sphere dequeue() {
-		return queue.removeFirst();
+		return queue.remove();
 	}
 
 	public boolean isEmpty() {
@@ -34,14 +34,14 @@ public class Trail {
 	}
 
 	public Sphere peek() {
-		return queue.getFirst();
+		return queue.peek();
 	}
 
 	public int size() {
 		return queue.size();
 	}
 
-	public void addMark() {
+	public boolean addMark() {
 		Sphere mark = new Sphere(3);
 		mark.setMaterial(new PhongMaterial(planet.getColor()));
 		mark.setTranslateX(planet.getPos()[0]);
@@ -50,28 +50,40 @@ public class Trail {
 		group.getChildren().add(mark);
 		enqueue(mark);
 		if (size() > 10) {
-			if (Math.abs(queue.peek().getTranslateX() - planet.getPos()[0]) < 5) {
-				if (Math.abs(queue.peek().getTranslateY() - planet.getPos()[1]) < 5) {
-					if (Math.abs(queue.peek().getTranslateZ() - planet.getPos()[2]) < 5) {
+			if (Math.abs(peek().getTranslateX() - planet.getPos()[0]) < 5) {
+				if (Math.abs(peek().getTranslateY() - planet.getPos()[1]) < 5) {
+					if (Math.abs(peek().getTranslateZ() - planet.getPos()[2]) < 5) {
 						removeMark();
+						return true;
 					}
 				}
 			}
 			if (size() > trailLength) {
-				removeMark();  
+				removeMark();
+				return true;
 			}
 		}
+		return false;
 	}
 	
 	public void removeMark() {
 		group.getChildren().remove(dequeue());
 	}
-
-	public void timeTick() {
+	
+	public void emptyList() {
+		int queueSize = this.queue.size();
+		for (int i = 0; i < queueSize; i++) {
+			removeMark();
+		}
+	}
+	
+	// returns true if a new trail mark was added
+	public boolean timeTick() {
 		timeVar++;
 		if (timeVar > markSeparation) {
 			timeVar = 0;
-			addMark();
+			return addMark();
 		}
+		return false;
 	}
 }

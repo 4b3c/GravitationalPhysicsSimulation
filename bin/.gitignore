@@ -1,2 +1,6 @@
 /application/
 /models/
+/stablesystems/
+
+
+*.class

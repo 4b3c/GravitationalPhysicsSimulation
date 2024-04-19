@@ -48,7 +48,9 @@ public class PhysicsSimulation extends Application {
 	private boolean paused = true;
 	private PauseButton playbutton;
 	
-	public Scene scene;
+	public static Scene scene;
+	
+	public double moonvel = 0.5;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -75,7 +77,7 @@ public class PhysicsSimulation extends Application {
 		Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
 		Group group = new Group(axes);
 
-		SolarSystem system = new SolarSystem("SunEarthMoon.txt");
+		SolarSystem system = new SolarSystem("InitVelTest.txt");
 		system.addPlanetUIs(planetList);
 		system.addToGroup(group);
 		
@@ -95,10 +97,15 @@ public class PhysicsSimulation extends Application {
 			
 		// Set up the game loop
 		Timeline gameLoop = new Timeline(new KeyFrame(Duration.seconds(1.0 / 60), event -> {
-			handleRotation(scene);
+			handleRotation();
 			
 			if (!paused) {
-				system.timeTick();
+				// Moon completed a rotation
+				if (system.timeTick()) {
+					PhysicsSimulation.captureScene("MoonVelocity" + moonvel + "TrailLength" + system.planetTrails.get(1).size() + "img.png");
+					moonvel = moonvel + 0.1;
+					system.changeMoon(moonvel);
+				}
 			}
 			
 		}));
@@ -119,7 +126,6 @@ public class PhysicsSimulation extends Application {
 	private void pausePlay() {
 		paused = !paused;
 		playbutton.toggle();
-		this.captureScene(scene, "screenshot1.png");
 	}
 	
 	private void setInputEvents(Scene scene, Text text1) {
@@ -141,7 +147,7 @@ public class PhysicsSimulation extends Application {
 		text1.setText(String.format("Mouse Position: (%.1f, %.1f)", mousePos[0], mousePos[1]));
 	}
 
-	private void handleRotation(Scene scene) {
+	private void handleRotation() {
 		if (mouseClicked) {
 			xRotate.setAngle(xRotate.getAngle() + (mousePos[1] - lastMousePos[1]) / 2);
 			yRotate.setAngle(yRotate.getAngle() - (mousePos[0] - lastMousePos[0]) / 2);
@@ -149,7 +155,7 @@ public class PhysicsSimulation extends Application {
 		}
 	}
 	
-    public void captureScene(Scene scene, String filename) {
+    public static void captureScene(String filename) {
         try {
             // Capture the screenshot
             WritableImage image = scene.snapshot(null);
@@ -158,7 +164,7 @@ public class PhysicsSimulation extends Application {
             BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
 
             // Create a file object
-            File file = new File(filename);
+            File file = new File("captures/" + filename);
 
             // Write the buffered image to the file
             ImageIO.write(bufferedImage, "png", file);

@@ -15,7 +15,7 @@ public class SolarSystem {
 	
 	private Scanner scnr;
 	private ArrayList<Body> planets = new ArrayList<Body>();
-	private ArrayList<Trail> planetTrails = new ArrayList<Trail>();
+	public ArrayList<Trail> planetTrails = new ArrayList<Trail>();
 	
 	public SolarSystem(String filename) {
 		try {
@@ -63,12 +63,30 @@ public class SolarSystem {
 		
 	}
 	
-	public void timeTick() {
+	public boolean timeTick() {
 		calculateAllForces();
 		for (Body planet : planets)
 			planet.timeTick();
-		for (Trail trail : planetTrails)
-			trail.timeTick();
+		for (Trail trail : planetTrails) {
+			if (trail.timeTick() && trail.planet.name.equals("Moon")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void changeMoon(double newVelocity) {
+		for (Body planet : planets) {
+			if (planet.name.equals("Moon")) {
+				planet.setVel(newVelocity, 0, 0);
+				planet.setPos(0, 0, -160);
+			}
+		}
+		for (Trail trail : planetTrails) {
+			if (trail.planet.name.equals("Moon")) {
+				trail.emptyList();
+			}
+		}
 	}
 	
 	public String toString() {

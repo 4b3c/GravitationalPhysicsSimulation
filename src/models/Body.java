@@ -15,7 +15,7 @@ import javafx.scene.shape.Sphere;
 
 public class Body extends Group {
 	
-	private String name;
+	public String name;
 	
 	private LinkedDouble mass;
 	private TextField massField;
