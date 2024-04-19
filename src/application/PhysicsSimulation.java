@@ -1,16 +1,13 @@
 package application;
 
+import javafx.application.Application;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
-import gui.PauseButton;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -25,12 +22,14 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import models.Axis3D;
 import javafx.scene.ParallelCamera;
 import javafx.embed.swing.SwingFXUtils;
 
+import gui.PauseButton;
+import models.Axis3D;
 
-public class Main extends Application {
+
+public class PhysicsSimulation extends Application {
 	
 	public final int[] WINDOW_SIZE = {1250, 800};
 	public final int[] SIMULATION_SIZE = {1000, 800};
