@@ -1,6 +1,6 @@
 package models;
 
-import application.Main;
+import application.PhysicsSimulation;
 import application.UpdateAction;
 import gui.BodyUI;
 import gui.LinkedDouble;
@@ -15,7 +15,7 @@ import javafx.scene.shape.Sphere;
 
 public class Body extends Group {
 	
-	private String name;
+	public String name;
 	
 	private LinkedDouble mass;
 	private TextField massField;
@@ -215,8 +215,8 @@ public class Body extends Group {
 			
 		Point3D dist = theirPosition.subtract(ourPosition);
 		Point3D distNorm = dist.normalize();
-		double distMag = dist.magnitude() * Main.SCALE;
-		double forceMag = (Main.GRAVITATIONAL_CONSTANT * getMass() * otherPlanet.getMass()) / (distMag * distMag);
+		double distMag = dist.magnitude() * PhysicsSimulation.SCALE;
+		double forceMag = (PhysicsSimulation.GRAVITATIONAL_CONSTANT * getMass() * otherPlanet.getMass()) / (distMag * distMag);
 		
 		addToForce(forceMag * distNorm.getX(), forceMag * distNorm.getY(), forceMag * distNorm.getZ());
 		setAcc(0, 0, 0);
