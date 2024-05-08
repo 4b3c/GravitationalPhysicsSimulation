@@ -1,0 +1,7 @@
+.custom-checkbox .box {
+	-fx-background-color: rgb(80, 80, 80);
+}
+	
+:checked > .box > .mark {
+	-fx-background-color: white;
+}

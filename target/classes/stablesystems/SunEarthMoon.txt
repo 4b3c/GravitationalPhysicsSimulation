@@ -1,0 +1,24 @@
+Sun 36.12 1.989E30
+Color: 255 255 51
+Position: 0 0 0
+Velocity: 0 0 0
+
+Mercury 11.5 3.285E23
+Color: 221 210 233
+Position: 57 -6 0
+Velocity: 0 0 1.5
+
+Venus 14.92 4.867E24
+Color: 251 140 20
+Position: 108 10 0
+Velocity: 0 0 1.1
+
+Earth 19.4 5.972E24
+Color: 40 160 190
+Position: 149 3 0
+Velocity: 0 0 0.94
+
+Mars 13.41 6.39E23
+Color: 205 97 82
+Position: 228 10 0
+Velocity: 0 0 0.76
