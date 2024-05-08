@@ -1,9 +1,0 @@
-Sun 55 3.2543E30
-Color: 255 255 51
-Position: 0 0 0
-Velocity: 0 0 0
-
-Moon 24 2.352E23
-Color: 190 177 168
-Position: 0 0 -160
-Velocity: 0.5 0 0

@@ -41,7 +41,7 @@ public class Trail {
 		return queue.size();
 	}
 
-	public boolean addMark() {
+	public void addMark() {
 		Sphere mark = new Sphere(3);
 		mark.setMaterial(new PhongMaterial(planet.getColor()));
 		mark.setTranslateX(planet.getPos()[0]);
@@ -54,16 +54,13 @@ public class Trail {
 				if (Math.abs(peek().getTranslateY() - planet.getPos()[1]) < 5) {
 					if (Math.abs(peek().getTranslateZ() - planet.getPos()[2]) < 5) {
 						removeMark();
-						return true;
 					}
 				}
 			}
 			if (size() > trailLength) {
 				removeMark();
-				return true;
 			}
 		}
-		return false;
 	}
 	
 	public void removeMark() {
@@ -77,13 +74,11 @@ public class Trail {
 		}
 	}
 	
-	// returns true if a new trail mark was added
-	public boolean timeTick() {
+	public void timeTick() {
 		timeVar++;
 		if (timeVar > markSeparation) {
 			timeVar = 0;
-			return addMark();
+			addMark();
 		}
-		return false;
 	}
 }

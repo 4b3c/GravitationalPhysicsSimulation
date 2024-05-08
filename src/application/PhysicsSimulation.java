@@ -49,8 +49,6 @@ public class PhysicsSimulation extends Application {
 	private PauseButton playbutton;
 	
 	public static Scene scene;
-	
-	public double moonvel = 0.5;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -77,7 +75,7 @@ public class PhysicsSimulation extends Application {
 		Axis3D axes = new Axis3D(5, 700, Color.DARKGRAY);
 		Group group = new Group(axes);
 
-		SolarSystem system = new SolarSystem("InitVelTest.txt");
+		SolarSystem system = new SolarSystem("SunEarthMoon.txt");
 		system.addPlanetUIs(planetList);
 		system.addToGroup(group);
 		
@@ -100,12 +98,7 @@ public class PhysicsSimulation extends Application {
 			handleRotation();
 			
 			if (!paused) {
-				// Moon completed a rotation
-				if (system.timeTick()) {
-					PhysicsSimulation.captureScene("MoonVelocity" + moonvel + "TrailLength" + system.planetTrails.get(1).size() + "img.png");
-					moonvel = moonvel + 0.1;
-					system.changeMoon(moonvel);
-				}
+				system.timeTick();
 			}
 			
 		}));
@@ -126,6 +119,7 @@ public class PhysicsSimulation extends Application {
 	private void pausePlay() {
 		paused = !paused;
 		playbutton.toggle();
+		PhysicsSimulation.captureScene("Screenshot.png");
 	}
 	
 	private void setInputEvents(Scene scene, Text text1) {
